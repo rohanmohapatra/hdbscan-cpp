@@ -123,6 +123,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="distance\IDistanceCalculator.cpp" />
+    <ClCompile Include="distance\EuclideanDistance.cpp" />
+    <ClCompile Include="runner\hdbscanResult.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="example.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="distance\EuclideanDistance.hpp" />
+    <ClInclude Include="example.hpp" />
+    <ClInclude Include="distance\IDistanceCalculator.hpp" />
+    <ClInclude Include="runner\hdbscanResult.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
