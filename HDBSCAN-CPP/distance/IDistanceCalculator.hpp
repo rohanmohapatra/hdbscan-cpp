@@ -13,6 +13,6 @@ class IDistanceCalculator
 	/// <param name="attributesTwo">The attributes of the second point</param>
 	/// <returns>A double for the distance between the two points</returns>
 public:
-	virtual double computeDistance(std::vector<double> attributesOne, std::vector<double> attributesTwo) = 0;
+	virtual double computeDistance(std::vector<double> attributesOne, std::vector<double> attributesTwo)=0;
 };
 
