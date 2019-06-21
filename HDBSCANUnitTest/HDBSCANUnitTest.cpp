@@ -100,4 +100,50 @@ namespace HDBSCANUnitTest
 			Assert::AreEqual(realDistance, distance, 0.001);
 		}
 	};
+	TEST_CLASS(coreDistances)
+	{
+		TEST_METHOD(coreDistances1)
+		{
+			std::vector<std::vector<double>> distances(6);
+			distances[0].push_back(0);
+			distances[0].push_back(5.73428958110767);
+			distances[0].push_back(2.98100989599162);
+			distances[0].push_back(5.97459429584972);
+			distances[0].push_back(0.497398230797014);
+			distances[0].push_back(3.20578804664313);
+			distances[1].push_back(5.73428958110767);
+			distances[1].push_back(0);
+			distances[1].push_back(3.45483154437376);
+			distances[1].push_back(0.565729617396862);
+			distances[1].push_back(6.13567551293254);
+			distances[1].push_back(8.63920181498268);
+			distances[2].push_back(2.98100989599162);
+		    distances[2].push_back(3.45483154437376);
+			distances[2].push_back(0);
+			distances[2].push_back(3.47814620164248);
+			distances[2].push_back(3.20909722507748);
+			distances[2].push_back(5.34961054657253);
+			distances[3].push_back(5.97459429584972);
+			distances[3].push_back(0.565729617396862);
+			distances[3].push_back(3.4781462016424);
+			distances[3].push_back(0);
+			distances[3].push_back(6.34934516308572);
+			distances[3].push_back(8.7699862029538);
+			distances[4].push_back(0.497398230797014);
+			distances[4].push_back(6.1356755129325);
+			distances[4].push_back(3.20909722507748);
+			distances[4].push_back(6.34934516308572);
+			distances[4].push_back(0);
+			distances[4].push_back(2.71220390088946);
+			distances[5].push_back(3.20578804664313);
+			distances[5].push_back(8.63920181498268);
+			distances[5].push_back(5.34961054657253);
+			distances[5].push_back(8.7699862029538);
+			distances[5].push_back(2.71220390088946);
+			distances[5].push_back(0);			using namespace hdbscanStar;
+			std::vector<double> coreDistances = hdbscanAlgorithm::calculateCoreDistances(distances, 10);
+			std::vector<double> actualcoreDistances{ 5.73429, 6.13568, 3.47815, 6.34935, 6.13568, 8.639 };
+			Assert::AreEqual(coreDistances, actualcoreDistances);
+		}
+	};
 }

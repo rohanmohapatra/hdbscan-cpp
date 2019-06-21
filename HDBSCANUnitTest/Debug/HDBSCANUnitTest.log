@@ -1,3 +1,4 @@
 ﻿  pch.cpp
   HDBSCANUnitTest.cpp
-  HDBSCANUnitTest.vcxproj -> C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Debug\HDBSCANUnitTest.dll
+C:\Users\sbasarko\OneDrive - Itron\Documents\github_c++\hdbscan-cpp\HDBSCANUnitTest\HDBSCANUnitTest.cpp(144,1): error C2653:  'hdbscanAlgorithm': is not a class or namespace name
+C:\Users\sbasarko\OneDrive - Itron\Documents\github_c++\hdbscan-cpp\HDBSCANUnitTest\HDBSCANUnitTest.cpp(144,58): error C3861:  'calculateCoreDistances': identifier not found
