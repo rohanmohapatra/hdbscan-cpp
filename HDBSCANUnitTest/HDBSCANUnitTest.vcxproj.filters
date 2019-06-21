@@ -31,5 +31,7 @@
     <Object Include="..\HDBSCAN-CPP\Debug\EuclideanDistance.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\example.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\IDistanceCalculator.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\undirectedGraph.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\outlierScore.obj" />
   </ItemGroup>
 </Project>
