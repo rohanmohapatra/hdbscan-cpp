@@ -3,7 +3,7 @@
 #include <limits>
 #include <stdexcept>
 
-namespace hdbscanSharp
+namespace hdbscanStar
 {
 	class cluster
 	{

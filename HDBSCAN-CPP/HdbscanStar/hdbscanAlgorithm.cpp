@@ -1,7 +1,10 @@
 #include <limits>
 #include <vector>
+#include <map>
+#include <algorithm>
 #include "../utils/bitSet.cpp"
 #include "undirectedGraph.cpp"
+#include "cluster.cpp"
 
 namespace hdbscanStar
 {
@@ -140,8 +143,48 @@ namespace hdbscanStar
 			return undirectedGraphObject;
 
 		}
+		static std::vector<int> FindProminentClusters(std::vector<cluster> clusters, std::vector<std::vector<int>> hierarchy, int numPoints)
+		{
+			//Take the list of propagated clusters from the root cluster:
+			std::vector<cluster> solution = clusters[1].PropagatedDescendants;
+			std::vector<int> flatPartitioning(numPoints);
+
+			//Store all the hierarchy positions at which to find the birth points for the flat clustering:
+			std::map<int, std::vector<int>> significantHierarchyPositions;
+
+			std::vector<cluster>::iterator it = solution.begin();
+			while(it!=solution.end())
+			{
+				int hierarchyPosition=(*it).HierarchyPosition;
+				if(significantHierarchyPositions.count(hierarchyPosition) > 0)
+					significantHierarchyPositions[hierarchyPosition].push_back((*it).Label);
+				else
+					significantHierarchyPositions[hierarchyPosition].resize((*it).Label);
+				it++;
+			}
+
+			//Go through the hierarchy file, setting labels for the flat clustering:
+			while (significantHierarchyPositions.size())
+			{
+				std::map<int, std::vector<int>>::iterator entry = significantHierarchyPositions.begin();
+				significantHierarchyPositions.erase(entry->first);
+
+				std::vector<int> clusterList = entry->second;
+				int hierarchyPosition  = entry->first;
+				std::vector<int> lineContents = hierarchy[hierarchyPosition];
+				
+				for (int i = 0; i < lineContents.size(); i++)
+				{
+					int label = lineContents[i];
+					if (std::find(clusterList.begin(),clusterList.end(), label)!=clusterList.end())
+						flatPartitioning[i] = label;
+				}
+			}
+			return flatPartitioning;
+		}
 	};
 
 }
+
 
 
