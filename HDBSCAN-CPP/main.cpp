@@ -1,10 +1,13 @@
 #include<iostream>
+#include<cstdio>
 #include"Example/example.hpp"
+#include"HdbscanStar/cluster.hpp"
 using namespace std;
 
 //using namespace csv;
 #include <typeinfo>
 #include <vector>
+#include <list>
 
 
 int main() {
@@ -27,6 +30,25 @@ int main() {
 		cout << endl;
 
 	}
+	vector <cluster> test;
+	cluster v[100];
+	test.reserve(100);
+	cluster expected;
+	test.push_back(expected);
+	printf("%p\n", &expected);
+	v[0] = expected;
+	cout << &v[0] << endl;
+	//cluster real = *std::find(test.begin(), test.end(), expected);
+	for (auto i = test.begin(); i != test.end(); ++i)
+		std::cout << &(*i) << ' ';
+	for (int i = 0; i < test.size(); ++i)
+		printf("%p\n", &test[i]);
+	
+	int e = 100;
+	int a[10];
+	a[0] = e;
+	cout << &a[0] << " " << &e << endl;
+	
 	return 0;
 
 }

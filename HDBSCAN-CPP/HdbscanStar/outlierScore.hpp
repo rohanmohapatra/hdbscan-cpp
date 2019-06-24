@@ -18,7 +18,7 @@ public:
 	/// <param name="coreDistance">The point's core distance</param>
 	/// <param name="id">The id (index) of the point</param>
 	outlierScore(double score, double coreDistance, int id);
-
+	outlierScore();
 	/// <summary>
 	/// Method Overridden to compare two objects.
 	/// </summary>

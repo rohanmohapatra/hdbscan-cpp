@@ -33,5 +33,7 @@
     <Object Include="..\HDBSCAN-CPP\Debug\IDistanceCalculator.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\undirectedGraph.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\outlierScore.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\cluster.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\bitSet.obj" />
   </ItemGroup>
 </Project>
