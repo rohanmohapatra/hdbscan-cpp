@@ -28,7 +28,7 @@ public:
 
 	cluster();
 
-	cluster(int label, cluster parent, double birthLevel, int numPoints);
+	cluster(int label, cluster *parent, double birthLevel, int numPoints);
 	bool operator==(const cluster& other) const;
 	void detachPoints(int numPoints, double level);
 	void propagate();
