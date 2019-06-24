@@ -57,9 +57,18 @@
     <ClCompile Include="HdbscanStar\hdbscanAlgorithm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="HdbscanStar\cluster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HdbscanStar\outlierScore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HdbscanStar\hdbscanConstraint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+=======
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distance\IDistanceCalculator.hpp">
@@ -86,5 +95,25 @@
     <ClInclude Include="HdbscanStar\undirectedGraph.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="HdbscanStar\outlierScore.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HdbscanStar\hdbscanConstraint.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HdbscanStar\cluster.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="FETCH_HEAD" />
+    <None Include="HDBSCAN-CPP.vcxproj.filters.orig" />
+    <None Include="HDBSCAN-CPP.vcxproj.orig" />
+    <None Include="README.md" />
+=======
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
   </ItemGroup>
 </Project>

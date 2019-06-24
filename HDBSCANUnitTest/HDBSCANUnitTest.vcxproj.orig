@@ -178,11 +178,21 @@
   </ItemGroup>
   <ItemGroup>
     <Object Include="..\HDBSCAN-CPP\Debug\bitSet.obj" />
+<<<<<<< HEAD
     <Object Include="..\HDBSCAN-CPP\Debug\cluster.obj" />
+=======
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
     <Object Include="..\HDBSCAN-CPP\Debug\EuclideanDistance.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\example.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\hdbscanParameters.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\hdbscanResult.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\IDistanceCalculator.obj" />
+<<<<<<< HEAD
     <Object Include="..\HDBSCAN-CPP\Debug\outlierScore.obj" />
+=======
+    <Object Include="..\HDBSCAN-CPP\Debug\main.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\ManhattanDistance.obj" />
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
     <Object Include="..\HDBSCAN-CPP\Debug\undirectedGraph.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
