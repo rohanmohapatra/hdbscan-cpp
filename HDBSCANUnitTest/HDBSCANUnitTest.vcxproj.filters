@@ -35,5 +35,11 @@
     <Object Include="..\HDBSCAN-CPP\Debug\outlierScore.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\cluster.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\bitSet.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\hdbscanAlgorithm.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\hdbscanConstraint.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\hdbscanParameters.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\hdbscanResult.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\hdbscanRunner.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\ManhattanDistance.obj" />
   </ItemGroup>
 </Project>
