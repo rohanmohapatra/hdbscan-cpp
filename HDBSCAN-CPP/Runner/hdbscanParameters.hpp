@@ -2,6 +2,7 @@
 #include"..//distance/IDistanceCalculator.hpp"
 #include<iostream>
 #include<vector>
+#include"../HdbscanStar/hdbscanConstraint.hpp"
 
 using namespace std;
 class hdbscanParameters
@@ -22,6 +23,6 @@ public:
 	string distanceFunction;
 	uint32_t minPoints;
 	uint32_t minClusterSize;
-	//vector<hdbscanConstraints> constraints;
+	vector<hdbscanConstraint> constraints;
 };
 
