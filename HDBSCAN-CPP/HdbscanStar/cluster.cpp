@@ -5,7 +5,7 @@ cluster ::cluster()
 		_id = ++counter;
 	}
 
-cluster::cluster(int label, cluster parent, double birthLevel, int numPoints) :Label(label), Parent(&parent), _birthLevel(birthLevel), _numPoints(numPoints)
+cluster::cluster(int label, cluster *parent, double birthLevel, int numPoints) :Label(label), Parent(parent), _birthLevel(birthLevel), _numPoints(numPoints)
 	{
 
 		_id = ++counter;
