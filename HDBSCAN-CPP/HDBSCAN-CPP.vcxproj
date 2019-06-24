@@ -135,6 +135,7 @@
     <ClCompile Include="Runner\hdbscanResult.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Example\example.cpp" />
+    <ClCompile Include="Runner\hdbscanRunner.cpp" />
     <ClCompile Include="Utils\bitSet.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +149,7 @@
     <ClInclude Include="HdbscanStar\undirectedGraph.hpp" />
     <ClInclude Include="Runner\hdbscanParameters.hpp" />
     <ClInclude Include="Runner\hdbscanResult.hpp" />
+    <ClInclude Include="Runner\hdbscanRunner.hpp" />
     <ClInclude Include="Utils\bitSet.hpp" />
   </ItemGroup>
   <ItemGroup>
