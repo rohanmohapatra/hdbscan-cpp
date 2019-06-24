@@ -107,6 +107,9 @@
     <ClInclude Include="Runner\hdbscanRunner.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HdbscanStar\hdbscanAlgorithm.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />

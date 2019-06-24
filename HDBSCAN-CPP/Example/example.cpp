@@ -41,6 +41,9 @@ int Example::loadCsv(int numberOfValues, bool skipHeader) {
 
 void Example::execute() {
 	//Call The Runner Class here
+	hdbscanRunner runner;
+	
+	
 }
 
 void Example::displayResult() {

@@ -8,7 +8,7 @@ public:
 	vector <int> labels;
 	vector <outlierScore> outliersScores;
 	bool hasInfiniteStability;
-
+	hdbscanResult();
 	hdbscanResult(vector<int> pLables, vector<outlierScore> pOutlierScores, bool pHsInfiniteStability);
 };
 

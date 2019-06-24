@@ -1,6 +1,8 @@
 #pragma once
 #include<string>
 #include<vector>
+#include"../Runner/hdbscanRunner.hpp"
+#include"../Runner/hdbscanParameters.hpp"
 #include"../Runner/hdbscanResult.hpp"
 
 using namespace std;

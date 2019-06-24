@@ -5,7 +5,7 @@
 #include"../HDBSCAN-CPP/distance/EuclideanDistance.hpp"
 #include"../HDBSCAN-CPP/Example/example.hpp"
 #include"..//HDBSCAN-CPP/HdbscanStar/outlierScore.hpp"
-#include"../HDBSCAN-CPP/HdbscanStar/hdbscanAlgorithm.cpp"
+#include"../HDBSCAN-CPP/HdbscanStar/hdbscanAlgorithm.hpp"
 #include"../HDBSCAN-CPP/HdbscanStar/cluster.hpp"
 #include"../HDBSCAN-CPP/HdbscanStar/undirectedGraph.hpp"
 #include <limits>
