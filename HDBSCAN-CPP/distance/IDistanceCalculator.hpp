@@ -1,3 +1,4 @@
+#pragma once
 #include<vector>
 /// <summary>
 /// An interface for classes which compute the distance between two points (where points are

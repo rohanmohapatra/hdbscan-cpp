@@ -144,6 +144,7 @@
     <ClInclude Include="distance\IDistanceCalculator.hpp" />
     <ClInclude Include="distance\ManhattanDistance.hpp" />
     <ClInclude Include="HdbscanStar\cluster.hpp" />
+    <ClInclude Include="HdbscanStar\hdbscanAlgorithm.hpp" />
     <ClInclude Include="HdbscanStar\hdbscanConstraint.hpp" />
     <ClInclude Include="HdbscanStar\outlierScore.hpp" />
     <ClInclude Include="HdbscanStar\undirectedGraph.hpp" />
