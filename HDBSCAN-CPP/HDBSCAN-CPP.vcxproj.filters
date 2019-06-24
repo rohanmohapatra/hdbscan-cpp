@@ -66,6 +66,9 @@
     <ClCompile Include="HdbscanStar\hdbscanConstraint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Runner\hdbscanRunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="distance\IDistanceCalculator.hpp">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HdbscanStar\cluster.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Runner\hdbscanRunner.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
