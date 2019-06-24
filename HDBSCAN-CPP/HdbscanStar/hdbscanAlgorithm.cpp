@@ -4,6 +4,7 @@
 #include <map>
 #include <algorithm>
 #include "../utils/bitSet.hpp"
+#include <list>
 #include "undirectedGraph.hpp"
 #include"outlierScore.hpp"
 #include"cluster.hpp"
@@ -152,6 +153,251 @@ namespace hdbscanStar
 		/// <param name="clusters">A list of Clusters forming a cluster tree</param>
 		/// <returns>true if there are any clusters with infinite stability, false otherwise</returns>
 
+		static std::vector<cluster *> ComputeHierarchyAndClusterTree(undirectedGraph mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> hierarchy, std::vector<double> pointNoiseLevels, std::vector<int> pointLastClusters)
+		{
+			int hierarchyPosition = 0;
+
+			//The current edge being removed from the MST:
+			int currentEdgeIndex = mst.getNumEdges() - 1;
+			int nextClusterLabel = 2;
+			bool nextLevelSignificant = true;
+
+			//The previous and current cluster numbers of each point in the data set:
+			std::vector<int> previousClusterLabels(mst.getNumVertices());
+			std::vector<int> currentClusterLabels(mst.getNumVertices());
+
+			for (int i = 0; i < currentClusterLabels.size(); i++)
+			{
+				currentClusterLabels[i] = 1;
+				previousClusterLabels[i] = 1;
+			}
+			std::vector<cluster *> clusters;
+			clusters.push_back(NULL);
+			cluster cluster_object(1, NULL, std::numeric_limits<double>::quiet_NaN(),  mst.getNumVertices());
+			clusters.push_back(&cluster_object);
+
+			std::set<int> clusterOne;
+			clusterOne.insert(1);
+			calculateNumConstraintsSatisfied(
+				clusterOne,
+				clusters,
+				constraints,
+				currentClusterLabels);
+			std::set<int> affectedClusterLabels;
+			std::set<int> affectedVertices;
+			while (currentEdgeIndex >= 0)
+			{
+				double currentEdgeWeight = mst.getEdgeWeightAtIndex(currentEdgeIndex);
+				std::vector<cluster> newClusters;
+				while (currentEdgeIndex >= 0 && mst.getEdgeWeightAtIndex(currentEdgeIndex) == currentEdgeWeight)
+				{
+					int firstVertex = mst.getFirstVertexAtIndex(currentEdgeIndex);
+					int secondVertex = mst.getSecondVertexAtIndex(currentEdgeIndex);
+					//int index_of_secondVertex = find(mst.getEdgeListForVertex(firstVertex).begin(), mst.getEdgeListForVertex(firstVertex).end(), secondVertex) - mst.getEdgeListForVertex(firstVertex).begin();
+					//int index_of_firstVertex =  find(mst.getEdgeListForVertex(secondVertex).begin(), mst.getEdgeListForVertex(secondVertex).end(), firstVertex) - mst.getEdgeListForVertex(secondVertex).begin();
+					mst.getEdgeListForVertex(firstVertex).erase(std::find(mst.getEdgeListForVertex(firstVertex).begin(), mst.getEdgeListForVertex(firstVertex).end(), secondVertex));
+					mst.getEdgeListForVertex(secondVertex).erase(std::find(mst.getEdgeListForVertex(secondVertex).begin(), mst.getEdgeListForVertex(secondVertex).end(), firstVertex));
+
+					if (currentClusterLabels[firstVertex] == 0)
+					{
+						currentEdgeIndex--;
+						continue;
+					}
+					affectedVertices.insert(firstVertex);
+					affectedVertices.insert(secondVertex);
+					affectedClusterLabels.insert(currentClusterLabels[firstVertex]);
+					currentEdgeIndex--;
+				}
+				if (!affectedClusterLabels.size())
+					continue;
+				while (affectedClusterLabels.size())
+				{
+					int examinedClusterLabel = *affectedClusterLabels.end();
+					affectedClusterLabels.erase(affectedClusterLabels.end());
+					std::set<int> examinedVertices;
+					std::set<int>::iterator it;
+					for(it=affectedVertices.begin(); it!=affectedVertices.end(); ++it)
+					{
+						int vertex = *it;
+						if (currentClusterLabels[vertex] == examinedClusterLabel)
+						{
+							examinedVertices.insert(vertex);
+							affectedVertices.erase(*it);
+						}
+					}
+					std::set<int> firstChildCluster;
+					std::list<int> unexploredFirstChildClusterPoints;
+					int numChildClusters = 0;
+					while (examinedVertices.size())
+					{
+						std::set<int> constructingSubCluster;
+						std::list<int> unexploredSubClusterPoints;
+						bool anyEdges = false;
+						bool incrementedChildCount = false;
+						int rootVertex = *examinedVertices.end();
+						constructingSubCluster.insert(rootVertex);
+						unexploredSubClusterPoints.push_back(rootVertex);
+						examinedVertices.erase(examinedVertices.end());
+						while (unexploredSubClusterPoints.size())
+						{
+							int vertexToExplore = *unexploredSubClusterPoints.begin();
+							unexploredSubClusterPoints.erase(unexploredSubClusterPoints.begin());
+							for(std::vector<int>::iterator it= mst.getEdgeListForVertex(vertexToExplore).begin(); it!= mst.getEdgeListForVertex(vertexToExplore).end(); it++)
+							{
+								int neighbor = *it;
+								anyEdges = true;
+								if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), neighbor)!=constructingSubCluster.end())
+								{
+									constructingSubCluster.insert(neighbor);
+									unexploredSubClusterPoints.push_back(neighbor);
+									examinedVertices.erase(std::find(examinedVertices.begin(), examinedVertices.end(),neighbor));
+
+								}
+							}
+							if (!incrementedChildCount && constructingSubCluster.size() >= minClusterSize && anyEdges)
+							{
+								incrementedChildCount = true;
+								numChildClusters++;
+
+								//If this is the first valid child cluster, stop exploring it:
+								if (firstChildCluster.size() == 0)
+								{
+									firstChildCluster = constructingSubCluster;
+									unexploredFirstChildClusterPoints = unexploredSubClusterPoints;
+									break;
+								}
+							}
+
+						}
+						//If there could be a split, and this child cluster is valid:
+						if (numChildClusters >= 2 && constructingSubCluster.size() >= minClusterSize && anyEdges)
+						{
+							//Check this child cluster is not equal to the unexplored first child cluster:
+							int firstChildClusterMember = *firstChildCluster.end();
+							if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), firstChildClusterMember)!=constructingSubCluster.end())
+								numChildClusters--;
+							//Otherwise, create a new cluster:
+							else
+							{
+								cluster newCluster = createNewCluster(constructingSubCluster, currentClusterLabels,
+										*clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
+								newClusters.push_back(newCluster);
+								clusters.push_back(&newCluster);
+								nextClusterLabel++;
+							}
+						}
+						else if (constructingSubCluster.size() < minClusterSize || !anyEdges)
+						{
+							createNewCluster(constructingSubCluster, currentClusterLabels,
+									*clusters[examinedClusterLabel], 0, currentEdgeWeight);
+
+							for(std::set<int>::iterator it=constructingSubCluster.begin(); it!=constructingSubCluster.end(); it++)
+							{
+								int point = *it;
+								pointNoiseLevels[point] = currentEdgeWeight;
+								pointLastClusters[point] = examinedClusterLabel;
+							}
+						}
+					}
+					if (numChildClusters >= 2 && currentClusterLabels[*firstChildCluster.begin()] == examinedClusterLabel)
+					{
+						while (unexploredFirstChildClusterPoints.size())
+						{
+							int vertexToExplore = *unexploredFirstChildClusterPoints.begin();
+							unexploredFirstChildClusterPoints.pop_front();
+							for(std::vector<int>::iterator it = mst.getEdgeListForVertex(vertexToExplore).begin(); it != mst.getEdgeListForVertex(vertexToExplore).end(); it++)
+							{
+								int neighbor = *it;
+								if (std::find(firstChildCluster.begin(), firstChildCluster.end(), neighbor)!=firstChildCluster.end())
+								{
+									firstChildCluster.insert(neighbor);
+									unexploredFirstChildClusterPoints.push_back(neighbor);
+								}
+							}
+						}
+						cluster newCluster = createNewCluster(firstChildCluster, currentClusterLabels,
+								*clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
+						newClusters.push_back(newCluster);
+						clusters.push_back(&newCluster);
+						nextClusterLabel++;
+					}
+				}
+				if (nextLevelSignificant || newClusters.size())
+				{
+					std::vector<int> lineContents(previousClusterLabels.size());
+					for (int i = 0; i < previousClusterLabels.size(); i++)
+						lineContents[i] = previousClusterLabels[i];
+					hierarchy.push_back(lineContents);
+					hierarchyPosition++;
+				}
+				std::set<int> newClusterLabels;
+				for(std::vector<cluster>::iterator it=newClusters.begin(); it!=newClusters.end();it++)
+				{
+					cluster newCluster = *it;
+					newCluster.HierarchyPosition = hierarchyPosition;
+					newClusterLabels.insert(newCluster.Label);
+				}
+				if (newClusterLabels.size())
+					calculateNumConstraintsSatisfied(newClusterLabels, clusters, constraints, currentClusterLabels);
+
+				for (int i = 0; i < previousClusterLabels.size(); i++)
+				{
+					previousClusterLabels[i] = currentClusterLabels[i];
+				}
+				if (!newClusters.size())
+					nextLevelSignificant = false;
+				else
+					nextLevelSignificant = true;
+			}
+
+			{
+				std::vector<int> lineContents(previousClusterLabels.size() + 1);
+				for (int i = 0; i < previousClusterLabels.size(); i++)
+					lineContents[i] = 0;
+				hierarchy.push_back(lineContents);
+			}
+			return clusters;
+		}
+		static std::vector<int> FindProminentClusters(std::vector<cluster> clusters, std::vector<std::vector<int>> hierarchy, int numPoints)
+		{
+			//Take the list of propagated clusters from the root cluster:
+			std::vector<cluster> solution = clusters[1].PropagatedDescendants;
+			std::vector<int> flatPartitioning(numPoints);
+
+			//Store all the hierarchy positions at which to find the birth points for the flat clustering:
+			std::map<int, std::vector<int>> significantHierarchyPositions;
+
+			std::vector<cluster>::iterator it = solution.begin();
+			while(it!=solution.end())
+			{
+				int hierarchyPosition=(*it).HierarchyPosition;
+				if(significantHierarchyPositions.count(hierarchyPosition) > 0)
+					significantHierarchyPositions[hierarchyPosition].push_back((*it).Label);
+				else
+					significantHierarchyPositions[hierarchyPosition].resize((*it).Label);
+				it++;
+			}
+
+			//Go through the hierarchy file, setting labels for the flat clustering:
+			while (significantHierarchyPositions.size())
+			{
+				std::map<int, std::vector<int>>::iterator entry = significantHierarchyPositions.begin();
+				significantHierarchyPositions.erase(entry->first);
+
+				std::vector<int> clusterList = entry->second;
+				int hierarchyPosition  = entry->first;
+				std::vector<int> lineContents = hierarchy[hierarchyPosition];
+				
+				for (int i = 0; i < lineContents.size(); i++)
+				{
+					int label = lineContents[i];
+					if (std::find(clusterList.begin(),clusterList.end(), label)!=clusterList.end())
+						flatPartitioning[i] = label;
+				}
+			}
+			return flatPartitioning;
+		}
+
 		static bool propagateTree(std::vector<cluster> clusters)
 		{
 			std::map<int, cluster> clustersToExamine;
@@ -262,7 +508,7 @@ namespace hdbscanStar
 			parentCluster.detachPoints(points.size(), edgeWeight);
 
 			if (clusterLabel != 0)
-				return cluster(clusterLabel, parentCluster, edgeWeight, points.size());
+				return cluster(clusterLabel, &parentCluster, edgeWeight, points.size());
 
 			parentCluster.addPointsToVirtualChildCluster(points);
 		}
