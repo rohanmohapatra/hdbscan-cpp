@@ -337,6 +337,75 @@ namespace HDBSCANUnitTest
 			}
 			
 		}
+		TEST_METHOD(constructMSTNumVeriticesTest)
+		{
+			std::vector<std::vector<double>> distances = {
+			{ 0,1.43030767999571,0.633501559579796,1.5499878396692,1.59836416418661 },
+			{ 1.43030767999571,0,0.870775304614075,0.136060318520133,0.316297648052891 },
+			{ 0.633501559579796,0.870775304614075,0,1.00314302071041,1.10818455409305 },
+			{ 1.5499878396692,0.136060318520133,1.00314302071041,0,0.216207899828692 },
+			{ 1.59836416418661,0.316297648052891,1.10818455409305,0.216207899828692,0 }
+			};
+			std::vector<double>coreDistances = { 0.633501559579796,0.136060318520133,0.633501559579796,0.136060318520133,0.216207899828692 };
+			hdbscanAlgorithm testObject;
+			undirectedGraph mst = testObject.constructMst(distances, coreDistances, true);
+			Assert::AreEqual(5, mst.getNumVertices());
+
+		}
+		TEST_METHOD(constructMSTNumEdgesTest)
+		{
+			std::vector<std::vector<double>> distances = {
+			{ 0,1.43030767999571,0.633501559579796,1.5499878396692,1.59836416418661 },
+			{ 1.43030767999571,0,0.870775304614075,0.136060318520133,0.316297648052891 },
+			{ 0.633501559579796,0.870775304614075,0,1.00314302071041,1.10818455409305 },
+			{ 1.5499878396692,0.136060318520133,1.00314302071041,0,0.216207899828692 },
+			{ 1.59836416418661,0.316297648052891,1.10818455409305,0.216207899828692,0 }
+			};
+			std::vector<double>coreDistances = { 0.633501559579796,0.136060318520133,0.633501559579796,0.136060318520133,0.216207899828692 };
+			hdbscanAlgorithm testObject;
+			undirectedGraph mst = testObject.constructMst(distances, coreDistances, true);
+			Assert::AreEqual(9, mst.getNumEdges());
+
+		}
+		TEST_METHOD(constructMSTVericesATest)
+		{
+			std::vector<std::vector<double>> distances = {
+			{ 0,1.43030767999571,0.633501559579796,1.5499878396692,1.59836416418661 },
+			{ 1.43030767999571,0,0.870775304614075,0.136060318520133,0.316297648052891 },
+			{ 0.633501559579796,0.870775304614075,0,1.00314302071041,1.10818455409305 },
+			{ 1.5499878396692,0.136060318520133,1.00314302071041,0,0.216207899828692 },
+			{ 1.59836416418661,0.316297648052891,1.10818455409305,0.216207899828692,0 }
+			};
+			std::vector<double>coreDistances = { 0.633501559579796,0.136060318520133,0.633501559579796,0.136060318520133,0.216207899828692 };
+			hdbscanAlgorithm testObject;
+			vector<int> expected = {2, 3, 1, 4, 0, 1, 2, 3, 4};
+			undirectedGraph mst = testObject.constructMst(distances, coreDistances, true);
+			for (int i = 0; i < mst.getNumEdges(); i++) {
+				Assert::AreEqual(expected[i], mst.getFirstVertexAtIndex(i));
+
+			}
+
+		}
+		TEST_METHOD(constructMSTVericesBTest)
+		{
+			std::vector<std::vector<double>> distances = {
+			{ 0,1.43030767999571,0.633501559579796,1.5499878396692,1.59836416418661 },
+			{ 1.43030767999571,0,0.870775304614075,0.136060318520133,0.316297648052891 },
+			{ 0.633501559579796,0.870775304614075,0,1.00314302071041,1.10818455409305 },
+			{ 1.5499878396692,0.136060318520133,1.00314302071041,0,0.216207899828692 },
+			{ 1.59836416418661,0.316297648052891,1.10818455409305,0.216207899828692,0 }
+			};
+			std::vector<double>coreDistances = { 0.633501559579796,0.136060318520133,0.633501559579796,0.136060318520133,0.216207899828692 };
+			hdbscanAlgorithm testObject;
+			vector<int> expected = { 0, 1, 2, 3, 0, 1, 2, 3, 4 };
+			undirectedGraph mst = testObject.constructMst(distances, coreDistances, true);
+			for (int i = 0; i < mst.getNumEdges(); i++) {
+				Assert::AreEqual(expected[i], mst.getSecondVertexAtIndex(i));
+
+			}
+
+		}
+
 		TEST_METHOD(constructMSTEdgeWeightsTest)
 		{
 			std::vector<std::vector<double>> distances = {
