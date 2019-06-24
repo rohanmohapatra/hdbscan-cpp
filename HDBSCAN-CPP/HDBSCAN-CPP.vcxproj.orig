@@ -126,8 +126,14 @@
     <ClCompile Include="distance\IDistanceCalculator.cpp" />
     <ClCompile Include="distance\EuclideanDistance.cpp" />
     <ClCompile Include="distance\ManhattanDistance.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="HdbscanStar\cluster.cpp" />
     <ClCompile Include="HdbscanStar\hdbscanAlgorithm.cpp" />
+    <ClCompile Include="HdbscanStar\hdbscanConstraint.cpp" />
+    <ClCompile Include="HdbscanStar\outlierScore.cpp" />
+=======
+    <ClCompile Include="HdbscanStar\hdbscanAlgorithm.cpp" />
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
     <ClCompile Include="HdbscanStar\undirectedGraph.cpp" />
     <ClCompile Include="Runner\hdbscanParameters.cpp" />
     <ClCompile Include="Runner\hdbscanResult.cpp" />
@@ -140,11 +146,28 @@
     <ClInclude Include="Example\example.hpp" />
     <ClInclude Include="distance\IDistanceCalculator.hpp" />
     <ClInclude Include="distance\ManhattanDistance.hpp" />
+<<<<<<< HEAD
+    <ClInclude Include="HdbscanStar\cluster.hpp" />
+    <ClInclude Include="HdbscanStar\hdbscanConstraint.hpp" />
+    <ClInclude Include="HdbscanStar\outlierScore.hpp" />
+=======
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
     <ClInclude Include="HdbscanStar\undirectedGraph.hpp" />
     <ClInclude Include="Runner\hdbscanParameters.hpp" />
     <ClInclude Include="Runner\hdbscanResult.hpp" />
     <ClInclude Include="Utils\bitSet.hpp" />
   </ItemGroup>
+<<<<<<< HEAD
+  <ItemGroup>
+    <None Include=".gitattributes" />
+    <None Include=".gitignore" />
+    <None Include="FETCH_HEAD" />
+    <None Include="HDBSCAN-CPP.vcxproj.filters.orig" />
+    <None Include="HDBSCAN-CPP.vcxproj.orig" />
+    <None Include="README.md" />
+  </ItemGroup>
+=======
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

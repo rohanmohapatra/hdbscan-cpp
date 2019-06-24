@@ -5,10 +5,25 @@
 #include"../HDBSCAN-CPP/distance/EuclideanDistance.hpp"
 #include"../HDBSCAN-CPP/Example/example.hpp"
 #include"..//HDBSCAN-CPP/HdbscanStar/outlierScore.hpp"
+#include"../HDBSCAN-CPP/HdbscanStar/hdbscanAlgorithm.cpp"
+#include"../HDBSCAN-CPP/HdbscanStar/cluster.hpp"
+#include"../HDBSCAN-CPP/HdbscanStar/undirectedGraph.hpp"
 #include <limits>
 #include <typeinfo>
+#include <windows.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace hdbscanStar;
+namespace Microsoft
+{
+	namespace VisualStudio
+	{
+		namespace CppUnitTestFramework
+		{
+			template<> static std::wstring ToString<cluster>(const class cluster& t) { return L"cluster"; }
+		}
+	}
+}
 
 namespace HDBSCANUnitTest
 {
@@ -61,7 +76,6 @@ namespace HDBSCANUnitTest
 		}
 	};
 	
-	
 	TEST_CLASS(EuclideanTest)
 	{
 	public:
@@ -102,6 +116,7 @@ namespace HDBSCANUnitTest
 			Assert::AreEqual(realDistance, distance, 0.001);
 		}
 	};
+<<<<<<< HEAD
 
 	TEST_CLASS(OutlierScoreTest)
 	{
@@ -227,7 +242,6 @@ namespace HDBSCANUnitTest
 		}
 		TEST_METHOD(OutlierScoreSortTest2)
 		{
-<<<<<<< Updated upstream
 			vector <vector<double>> x = {
 				{0,0.889528896739179,0.536626916823739},
 				{1,1.30766765703343,0.684794721931497},
@@ -245,9 +259,123 @@ namespace HDBSCANUnitTest
 				Assert::AreEqual(expected[i], actual);
 			}
 			
+		}
+	};
+
+	TEST_CLASS(clusterTest)
+	{
+		TEST_METHOD(clusterEqualityCheck)
+		{
+			std::vector<cluster> test;
+			cluster expected = cluster();
+			test.push_back(expected);
+			cluster real = *std::find(test.begin(), test.end(), expected);
+			Assert::AreEqual(expected.getClusterId(), real.getClusterId());
+		}
+		TEST_METHOD(clusterEqualityCheck2)
+		{
+			std::vector<cluster> test;
+			for (int i = 0; i < 10; i++) {
+				cluster expected = cluster();
+				test.push_back(expected);
+				cluster real = *std::find(test.begin(), test.end(), expected);
+				Assert::AreEqual(expected, real);
+			}
+		}
+		/*TEST_METHOD(clusterEqualityCheck)
+		{
+			std::vector<cluster> test;
+			cluster expected = cluster();
+			test.push_back(expected);
+			cluster real = *std::find(test.begin(), test.end(), expected);
+			Assert::AreEqual(expected.getClusterId(), real.getClusterId());
+		}*/
+	};
+	TEST_CLASS(hdbscanAlgorithmTest)
+	{
+		TEST_METHOD(computedDistanceTest)
+		{
+			std::vector<std::vector<double>> test = {
+			{ 0,1.43030767999571,0.633501559579796,1.5499878396692,1.59836416418661 },
+			{ 1.43030767999571,0,0.870775304614075,0.136060318520133,0.316297648052891 },
+			{ 0.633501559579796,0.870775304614075,0,1.00314302071041,1.10818455409305 },
+			{ 1.5499878396692,0.136060318520133,1.00314302071041,0,0.216207899828692 },
+			{ 1.59836416418661,0.316297648052891,1.10818455409305,0.216207899828692,0 }
+			};
+			Example example("../../HDBSCANDataset/ShortData.csv");
+			example.loadCsv(2);
+			std::vector<std::vector<double>> actual(example.dataset.size());
+			for (int i = 0; i < actual.size(); i++) {
+				actual[i].resize(example.dataset.size());
+				EuclideanDistance Edistance;
+				for (int j = 0; j < i; j++) {
+					double distance = Edistance.computeDistance(example.dataset[i], example.dataset[j]);
+					actual[i][j] = distance;
+					actual[j][i] = distance;
+				}	
+			}
+			for (int i = 0; i < test.size(); i++) {
+				for (int j = 0; j < test[i].size(); j++) {
+					Assert::AreEqual(test[i][j], actual[i][j],0.00001);
+				}
+			}
+
+		}
+		TEST_METHOD(coreDistancesTest)
+		{
+			std::vector<std::vector<double>> distances = {
+			{ 0,1.43030767999571,0.633501559579796,1.5499878396692,1.59836416418661 },
+			{ 1.43030767999571,0,0.870775304614075,0.136060318520133,0.316297648052891 },
+			{ 0.633501559579796,0.870775304614075,0,1.00314302071041,1.10818455409305 },
+			{ 1.5499878396692,0.136060318520133,1.00314302071041,0,0.216207899828692 },
+			{ 1.59836416418661,0.316297648052891,1.10818455409305,0.216207899828692,0 }
+			};
+			hdbscanAlgorithm testObject;
+			std::vector<double> actual = testObject.calculateCoreDistances(distances, 2);
+			std::vector<double> expected = { 0.633501559579796,0.136060318520133,0.633501559579796,0.136060318520133,0.216207899828692 };
+			for (int i = 0; i< expected.size(); i++) {
+				Assert::AreEqual(expected[i], actual[i], 0.00001);
+			}
+			
+		}
+		TEST_METHOD(constructMSTEdgeWeightsTest)
+		{
+			std::vector<std::vector<double>> distances = {
+			{ 0,1.43030767999571,0.633501559579796,1.5499878396692,1.59836416418661 },
+			{ 1.43030767999571,0,0.870775304614075,0.136060318520133,0.316297648052891 },
+			{ 0.633501559579796,0.870775304614075,0,1.00314302071041,1.10818455409305 },
+			{ 1.5499878396692,0.136060318520133,1.00314302071041,0,0.216207899828692 },
+			{ 1.59836416418661,0.316297648052891,1.10818455409305,0.216207899828692,0 }
+			};
+			std::vector<double>coreDistances = { 0.633501559579796,0.136060318520133,0.633501559579796,0.136060318520133,0.216207899828692 };
+			std::vector<double> expected = { 0.633501559579796,0.136060318520133,0.870775304614075,0.216207899828692,0.633501559579796,0.136060318520133,0.633501559579796,0.136060318520133,0.216207899828692 };
+			hdbscanAlgorithm testObject;
+			Assert::AreEqual(5, (int)distances.size());
+			Assert::AreEqual(5, (int)coreDistances.size());
+			undirectedGraph mst = testObject.constructMst(distances, coreDistances, true);
+			for (int i = 0; i < mst.getNumEdges(); i++) {
+				double actual = mst.getEdgeWeightAtIndex(i);
+				Assert::AreEqual(expected[i], actual, 0.00001);
+			}
+
+		}
+	};
+
+
+	/*
 =======
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
+	TEST_CLASS(coreDistances)
+	{
+		TEST_METHOD(coreDistances1)
+		{
+<<<<<<< HEAD
 			std::vector<std::vector<double>> distances(6);
 
+
+=======
+			std::vector<std::vector<double>> distances(6);
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
 			distances[0].push_back(0);
 			distances[0].push_back(5.73428958110767);
 			distances[0].push_back(2.98100989599162);
@@ -283,12 +411,19 @@ namespace HDBSCANUnitTest
 			distances[5].push_back(5.34961054657253);
 			distances[5].push_back(8.7699862029538);
 			distances[5].push_back(2.71220390088946);
+<<<<<<< HEAD
 			distances[5].push_back(0);
 			using namespace hdbscanStar;
+=======
+			distances[5].push_back(0);			using namespace hdbscanStar;
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
 			std::vector<double> coreDistances = hdbscanAlgorithm::calculateCoreDistances(distances, 10);
 			std::vector<double> actualcoreDistances{ 5.73429, 6.13568, 3.47815, 6.34935, 6.13568, 8.639 };
 			Assert::AreEqual(coreDistances, actualcoreDistances);
->>>>>>> Stashed changes
 		}
+<<<<<<< HEAD
+	};*/
+=======
 	};
+>>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
 }
