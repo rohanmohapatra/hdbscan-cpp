@@ -1,5 +1,10 @@
 #include "outlierScore.hpp"
 #include <tuple> 
+
+outlierScore::outlierScore() {
+	;
+}
+
 outlierScore::outlierScore(double score, double coreDistance, int id) {
 	outlierScore::score = score;
 	outlierScore::coreDistance = coreDistance;

@@ -1,23 +1,27 @@
 ﻿  HDBSCANUnitTest.cpp
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(215,62): warning C4244:  'argument': conversion from '_Ty' to 'int', possible loss of data
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(215,62): warning C4244:         with
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(215,62): warning C4244:         [
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(215,62): warning C4244:             _Ty=double
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(215,62): warning C4244:         ]
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(236,56): warning C4244:  'argument': conversion from '_Ty' to 'int', possible loss of data
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(236,56): warning C4244:         with
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(236,56): warning C4244:         [
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(236,56): warning C4244:             _Ty=double
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(236,56): warning C4244:         ]
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(237,56): warning C4244:  'argument': conversion from '_Ty' to 'int', possible loss of data
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(237,56): warning C4244:         with
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(237,56): warning C4244:         [
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(237,56): warning C4244:             _Ty=double
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(237,56): warning C4244:         ]
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(238,56): warning C4244:  'argument': conversion from '_Ty' to 'int', possible loss of data
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(238,56): warning C4244:         with
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(238,56): warning C4244:         [
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(238,56): warning C4244:             _Ty=double
-C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(238,56): warning C4244:         ]
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(229,62): warning C4244:  'argument': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(229,62): warning C4244:         with
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(229,62): warning C4244:         [
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(229,62): warning C4244:             _Ty=double
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(229,62): warning C4244:         ]
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(250,56): warning C4244:  'argument': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(250,56): warning C4244:         with
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(250,56): warning C4244:         [
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(250,56): warning C4244:             _Ty=double
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(250,56): warning C4244:         ]
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(251,56): warning C4244:  'argument': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(251,56): warning C4244:         with
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(251,56): warning C4244:         [
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(251,56): warning C4244:             _Ty=double
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(251,56): warning C4244:         ]
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(252,56): warning C4244:  'argument': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(252,56): warning C4244:         with
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(252,56): warning C4244:         [
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(252,56): warning C4244:             _Ty=double
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(252,56): warning C4244:         ]
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(307,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(316,22): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(317,23): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(335,21): warning C4018:  '<': signed/unsigned mismatch
      Creating library C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Debug\HDBSCANUnitTest.lib and object C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Debug\HDBSCANUnitTest.exp
   HDBSCANUnitTest.vcxproj -> C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Debug\HDBSCANUnitTest.dll

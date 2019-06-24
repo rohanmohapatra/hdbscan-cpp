@@ -177,6 +177,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Object Include="..\HDBSCAN-CPP\Debug\bitSet.obj" />
+    <Object Include="..\HDBSCAN-CPP\Debug\cluster.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\EuclideanDistance.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\example.obj" />
     <Object Include="..\HDBSCAN-CPP\Debug\IDistanceCalculator.obj" />
