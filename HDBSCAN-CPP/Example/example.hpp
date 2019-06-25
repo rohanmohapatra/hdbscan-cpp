@@ -35,7 +35,7 @@ public:
 			   
 	int loadCsv(int numberOfValues, bool skipHeader=false);
 
-	void execute();
+	void execute(int minPoints, int minClusterSize, string distanceMetric);
 
 	void displayResult();
 

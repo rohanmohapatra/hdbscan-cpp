@@ -85,12 +85,8 @@ void cluster::propagate()
 	}
 void cluster::addPointsToVirtualChildCluster(std::set<int> points)
 	{
-		std::set<int>::iterator it = points.begin();
-		while (it != points.end())
-		{
+	for (std::set<int>::iterator it = points.begin(); it != points.end(); ++it) {
 			_virtualChildCluster.insert(*it);
-			it++;
-
 		}
 	}
 bool cluster::virtualChildClusterConstraintsPoint(int point)
