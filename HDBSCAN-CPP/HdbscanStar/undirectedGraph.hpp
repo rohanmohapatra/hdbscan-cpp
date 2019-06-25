@@ -19,11 +19,6 @@ public:
 		_edges.resize(numVertices);
 		int _edgesLength = _edges.size();
 		int _edgeWeightsLength = _edgeWeights.size();
-
-		for (int i = 0; i < _edgesLength; i++)
-		{
-			_edges[i].resize(1 + _edgeWeightsLength / numVertices);
-		}
 		for (int i = 0; i < _edgeWeightsLength; i++)
 		{
 			_edges[_verticesA[i]].push_back(_verticesB[i]);
@@ -43,7 +38,7 @@ public:
 	int getSecondVertexAtIndex(int index);
 
 	double getEdgeWeightAtIndex(int index);
-	std::vector<int> getEdgeListForVertex(int vertex);
+	std::vector<int> &getEdgeListForVertex(int vertex);
 private:
 	int selectPivotIndex(int startIndex, int endIndex);
 

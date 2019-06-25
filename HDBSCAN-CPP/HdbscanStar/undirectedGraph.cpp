@@ -122,7 +122,7 @@ double undirectedGraph::getEdgeWeightAtIndex(int index)
 	return _edgeWeights[index];
 }
 
-std::vector<int> undirectedGraph::getEdgeListForVertex(int vertex)
+std::vector<int>& undirectedGraph::getEdgeListForVertex(int vertex)
 {
 	return _edges[vertex];
-			}
+}

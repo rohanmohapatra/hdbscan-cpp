@@ -34,9 +34,9 @@ namespace hdbscanStar
 		/// <param name="clusters">A list of Clusters forming a cluster tree</param>
 		/// <returns>true if there are any clusters with infinite stability, false otherwise</returns>
 
-		static std::vector<cluster*> computeHierarchyAndClusterTree(undirectedGraph mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> hierarchy, std::vector<double> pointNoiseLevels, std::vector<int> pointLastClusters);
+		static std::vector<cluster*> computeHierarchyAndClusterTree(undirectedGraph *mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> &hierarchy, std::vector<double> &pointNoiseLevels, std::vector<int> &pointLastClusters);
 		
-		static std::vector<int> findProminentClusters(std::vector<cluster*> clusters, std::vector<std::vector<int>> hierarchy, int numPoints);
+		static std::vector<int> findProminentClusters(std::vector<cluster*> &clusters, std::vector<std::vector<int>> &hierarchy, int numPoints);
 
 		static bool propagateTree(std::vector<cluster*> clusters);
 		
@@ -50,9 +50,9 @@ namespace hdbscanStar
 		/// <param name="coreDistances">An array of core distances for each data point</param>
 		/// <returns>An List of OutlierScores, sorted in descending order</returns>
 		static std::vector<outlierScore> calculateOutlierScores(
-			std::vector<cluster*> clusters,
-			std::vector<double> pointNoiseLevels,
-			std::vector<int> pointLastClusters,
+			std::vector<cluster*> &clusters,
+			std::vector<double> &pointNoiseLevels,
+			std::vector<int> &pointLastClusters,
 			std::vector<double> coreDistances);
 		
 		/// <summary>
@@ -67,8 +67,8 @@ namespace hdbscanStar
 		/// <returns>The new Cluster, or null if the clusterId was 0</returns>
 		static cluster createNewCluster(
 			std::set<int> points,
-			std::vector<int> clusterLabels,
-			cluster parentCluster,
+			std::vector<int> &clusterLabels,
+			cluster *parentCluster,
 			int clusterLabel,
 			double edgeWeight);
 		
@@ -85,6 +85,7 @@ namespace hdbscanStar
 			std::vector<cluster*> clusters,
 			std::vector<hdbscanConstraint> constraints,
 			std::vector<int> clusterLabels);
+		
 	};
 
 }

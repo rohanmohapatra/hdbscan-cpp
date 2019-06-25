@@ -1,3 +1,4 @@
+#include <iostream>
 #include <limits>
 #include <vector>
 #include <set>
@@ -143,18 +144,18 @@ undirectedGraph hdbscanStar::hdbscanAlgorithm::constructMst(std::vector<std::vec
 /// <param name="clusters">A list of Clusters forming a cluster tree</param>
 /// <returns>true if there are any clusters with infinite stability, false otherwise</returns>
 
-std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGraph mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> hierarchy, std::vector<double> pointNoiseLevels, std::vector<int> pointLastClusters)
+std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGraph *mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> &hierarchy, std::vector<double> &pointNoiseLevels, std::vector<int> &pointLastClusters)
 {
 	int hierarchyPosition = 0;
 
 	//The current edge being removed from the MST:
-	int currentEdgeIndex = mst.getNumEdges() - 1;
+	int currentEdgeIndex = mst->getNumEdges() - 1;
 	int nextClusterLabel = 2;
 	bool nextLevelSignificant = true;
 
 	//The previous and current cluster numbers of each point in the data set:
-	std::vector<int> previousClusterLabels(mst.getNumVertices());
-	std::vector<int> currentClusterLabels(mst.getNumVertices());
+	std::vector<int> previousClusterLabels(mst->getNumVertices());
+	std::vector<int> currentClusterLabels(mst->getNumVertices());
 
 	for (int i = 0; i < currentClusterLabels.size(); i++)
 	{
@@ -163,7 +164,7 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 	}
 	std::vector<cluster *> clusters;
 	clusters.push_back(NULL);
-	cluster cluster_object(1, NULL, std::numeric_limits<double>::quiet_NaN(),  mst.getNumVertices());
+	cluster cluster_object(1, NULL, std::numeric_limits<double>::quiet_NaN(),  mst->getNumVertices());
 	clusters.push_back(&cluster_object);
 
 	std::set<int> clusterOne;
@@ -177,16 +178,20 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 	std::set<int> affectedVertices;
 	while (currentEdgeIndex >= 0)
 	{
-		double currentEdgeWeight = mst.getEdgeWeightAtIndex(currentEdgeIndex);
+		double currentEdgeWeight = mst->getEdgeWeightAtIndex(currentEdgeIndex);
 		std::vector<cluster> newClusters;
-		while (currentEdgeIndex >= 0 && mst.getEdgeWeightAtIndex(currentEdgeIndex) == currentEdgeWeight)
+		while (currentEdgeIndex >= 0 && mst->getEdgeWeightAtIndex(currentEdgeIndex) == currentEdgeWeight)
 		{
-			int firstVertex = mst.getFirstVertexAtIndex(currentEdgeIndex);
-			int secondVertex = mst.getSecondVertexAtIndex(currentEdgeIndex);
-			//int index_of_secondVertex = find(mst.getEdgeListForVertex(firstVertex).begin(), mst.getEdgeListForVertex(firstVertex).end(), secondVertex) - mst.getEdgeListForVertex(firstVertex).begin();
-			//int index_of_firstVertex =  find(mst.getEdgeListForVertex(secondVertex).begin(), mst.getEdgeListForVertex(secondVertex).end(), firstVertex) - mst.getEdgeListForVertex(secondVertex).begin();
-			mst.getEdgeListForVertex(firstVertex).erase(std::find(mst.getEdgeListForVertex(firstVertex).begin(), mst.getEdgeListForVertex(firstVertex).end(), secondVertex));
-			mst.getEdgeListForVertex(secondVertex).erase(std::find(mst.getEdgeListForVertex(secondVertex).begin(), mst.getEdgeListForVertex(secondVertex).end(), firstVertex));
+			int firstVertex = mst->getFirstVertexAtIndex(currentEdgeIndex);
+			int secondVertex = mst->getSecondVertexAtIndex(currentEdgeIndex);
+			std::vector<int> &firstVertexEdgeList = mst->getEdgeListForVertex(firstVertex);
+			std::vector<int>::iterator secondVertexInFirstEdgeList = std::find(firstVertexEdgeList.begin(), firstVertexEdgeList.end(), secondVertex);
+			if(secondVertexInFirstEdgeList != mst->getEdgeListForVertex(firstVertex).end())
+				mst->getEdgeListForVertex(firstVertex).erase( secondVertexInFirstEdgeList);
+			std::vector<int> &secondVertexEdgeList = mst->getEdgeListForVertex(secondVertex);
+			std::vector<int>::iterator firstVertexInSecondEdgeList = std::find(secondVertexEdgeList.begin(), secondVertexEdgeList.end(), firstVertex);
+			if(firstVertexInSecondEdgeList !=mst->getEdgeListForVertex(secondVertex).end())
+				mst->getEdgeListForVertex(secondVertex).erase(firstVertexInSecondEdgeList);
 
 			if (currentClusterLabels[firstVertex] == 0)
 			{
@@ -202,17 +207,21 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 			continue;
 		while (affectedClusterLabels.size())
 		{
-			int examinedClusterLabel = *affectedClusterLabels.end();
-			affectedClusterLabels.erase(affectedClusterLabels.end());
+			int examinedClusterLabel = *prev(affectedClusterLabels.end());
+			affectedClusterLabels.erase(prev(affectedClusterLabels.end()));
 			std::set<int> examinedVertices;
-			std::set<int>::iterator it;
-			for(it=affectedVertices.begin(); it!=affectedVertices.end(); ++it)
+			//std::set<int>::iterator affectedIt;
+			for(auto affectedIt =affectedVertices.begin(); affectedIt !=affectedVertices.end();)
 			{
-				int vertex = *it;
+				int vertex = *affectedIt;
 				if (currentClusterLabels[vertex] == examinedClusterLabel)
 				{
 					examinedVertices.insert(vertex);
-					affectedVertices.erase(*it);
+					affectedIt = affectedVertices.erase(affectedIt);
+					
+				}
+				else {
+					++affectedIt;
 				}
 			}
 			std::set<int> firstChildCluster;
@@ -220,28 +229,36 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 			int numChildClusters = 0;
 			while (examinedVertices.size())
 			{
+				
 				std::set<int> constructingSubCluster;
+				int iters = 0;
 				std::list<int> unexploredSubClusterPoints;
 				bool anyEdges = false;
 				bool incrementedChildCount = false;
-				int rootVertex = *examinedVertices.end();
+				int rootVertex = *prev(examinedVertices.end());
 				constructingSubCluster.insert(rootVertex);
 				unexploredSubClusterPoints.push_back(rootVertex);
-				examinedVertices.erase(examinedVertices.end());
+				examinedVertices.erase(prev(examinedVertices.end()));
 				while (unexploredSubClusterPoints.size())
 				{
+					std::cout << "Here " <<iters++<< std::endl;
 					int vertexToExplore = *unexploredSubClusterPoints.begin();
 					unexploredSubClusterPoints.erase(unexploredSubClusterPoints.begin());
-					for(std::vector<int>::iterator it= mst.getEdgeListForVertex(vertexToExplore).begin(); it!= mst.getEdgeListForVertex(vertexToExplore).end(); it++)
+					std::vector<int> &vertexToExploreEdgeList = mst->getEdgeListForVertex(vertexToExplore);
+					for(std::vector<int>::iterator it= vertexToExploreEdgeList.begin(); it!=vertexToExploreEdgeList.end();)
 					{
 						int neighbor = *it;
 						anyEdges = true;
-						if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), neighbor)!=constructingSubCluster.end())
+						if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), neighbor)==constructingSubCluster.end())
 						{
 							constructingSubCluster.insert(neighbor);
 							unexploredSubClusterPoints.push_back(neighbor);
-							examinedVertices.erase(std::find(examinedVertices.begin(), examinedVertices.end(),neighbor));
+							if(std::find(examinedVertices.begin(), examinedVertices.end(), neighbor)!=examinedVertices.end())
+								examinedVertices.erase(std::find(examinedVertices.begin(), examinedVertices.end(),neighbor));
 
+						}
+						else {
+							++it;
 						}
 					}
 					if (!incrementedChildCount && constructingSubCluster.size() >= minClusterSize && anyEdges)
@@ -263,14 +280,13 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 				if (numChildClusters >= 2 && constructingSubCluster.size() >= minClusterSize && anyEdges)
 				{
 					//Check this child cluster is not equal to the unexplored first child cluster:
-					int firstChildClusterMember = *firstChildCluster.end();
+					int firstChildClusterMember = *prev(firstChildCluster.end());
 					if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), firstChildClusterMember)!=constructingSubCluster.end())
 						numChildClusters--;
-					//Otherwise, create a new cluster:
-					else
+					//Otherwise, c a new cluster:
 					{
 						cluster newCluster = createNewCluster(constructingSubCluster, currentClusterLabels,
-								*clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
+								clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
 						newClusters.push_back(newCluster);
 						clusters.push_back(&newCluster);
 						nextClusterLabel++;
@@ -279,7 +295,7 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 				else if (constructingSubCluster.size() < minClusterSize || !anyEdges)
 				{
 					createNewCluster(constructingSubCluster, currentClusterLabels,
-							*clusters[examinedClusterLabel], 0, currentEdgeWeight);
+							clusters[examinedClusterLabel], 0, currentEdgeWeight);
 
 					for(std::set<int>::iterator it=constructingSubCluster.begin(); it!=constructingSubCluster.end(); it++)
 					{
@@ -295,18 +311,21 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 				{
 					int vertexToExplore = *unexploredFirstChildClusterPoints.begin();
 					unexploredFirstChildClusterPoints.pop_front();
-					for(std::vector<int>::iterator it = mst.getEdgeListForVertex(vertexToExplore).begin(); it != mst.getEdgeListForVertex(vertexToExplore).end(); it++)
+					for(std::vector<int>::iterator it = mst->getEdgeListForVertex(vertexToExplore).begin(); it != mst->getEdgeListForVertex(vertexToExplore).end(); it++)
 					{
 						int neighbor = *it;
-						if (std::find(firstChildCluster.begin(), firstChildCluster.end(), neighbor)!=firstChildCluster.end())
+						if (std::find(firstChildCluster.begin(), firstChildCluster.end(), neighbor)==firstChildCluster.end())
 						{
 							firstChildCluster.insert(neighbor);
 							unexploredFirstChildClusterPoints.push_back(neighbor);
 						}
 					}
 				}
+				//std::cout << "Id: "<< clusters[examinedClusterLabel]->getClusterId()<< std::endl;
+				cluster* mustPassThis = clusters[examinedClusterLabel - 1];
+				cluster test = createNewCluster(firstChildCluster, currentClusterLabels,mustPassThis, nextClusterLabel, currentEdgeWeight);
 				cluster newCluster = createNewCluster(firstChildCluster, currentClusterLabels,
-						*clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
+						&(*clusters[examinedClusterLabel]), nextClusterLabel, currentEdgeWeight);
 				newClusters.push_back(newCluster);
 				clusters.push_back(&newCluster);
 				nextClusterLabel++;
@@ -348,7 +367,7 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 	}
 	return clusters;
 }
-std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vector<cluster*> clusters, std::vector<std::vector<int>> hierarchy, int numPoints)
+std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vector<cluster*> &clusters, std::vector<std::vector<int>> &hierarchy, int numPoints)
 {
 	//Take the list of propagated clusters from the root cluster:
 	std::vector<cluster> solution = clusters[1]->PropagatedDescendants;
@@ -372,10 +391,10 @@ std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vecto
 	while (significantHierarchyPositions.size())
 	{
 		std::map<int, std::vector<int>>::iterator entry = significantHierarchyPositions.begin();
+		std::vector<int> clusterList = entry->second;
+		int hierarchyPosition = entry->first;
 		significantHierarchyPositions.erase(entry->first);
 
-		std::vector<int> clusterList = entry->second;
-		int hierarchyPosition  = entry->first;
 		std::vector<int> lineContents = hierarchy[hierarchyPosition];
 				
 		for (int i = 0; i < lineContents.size(); i++)
@@ -445,9 +464,9 @@ bool hdbscanStar::hdbscanAlgorithm::propagateTree(std::vector<cluster*> clusters
 /// <param name="coreDistances">An array of core distances for each data point</param>
 /// <returns>An List of OutlierScores, sorted in descending order</returns>
 std::vector<outlierScore> hdbscanStar::hdbscanAlgorithm::calculateOutlierScores(
-	std::vector<cluster*> clusters,
-	std::vector<double> pointNoiseLevels,
-	std::vector<int> pointLastClusters,
+	std::vector<cluster*> &clusters,
+	std::vector<double> &pointNoiseLevels,
+	std::vector<int> &pointLastClusters,
 	std::vector<double> coreDistances)
 {
 	int numPoints = pointNoiseLevels.size();
@@ -483,8 +502,8 @@ std::vector<outlierScore> hdbscanStar::hdbscanAlgorithm::calculateOutlierScores(
 /// <returns>The new Cluster, or null if the clusterId was 0</returns>
 cluster hdbscanStar::hdbscanAlgorithm::createNewCluster(
 	std::set<int> points,
-	std::vector<int> clusterLabels,
-	cluster parentCluster,
+	std::vector<int> &clusterLabels,
+	cluster *parentCluster,
 	int clusterLabel,
 	double edgeWeight)
 {
@@ -495,12 +514,13 @@ cluster hdbscanStar::hdbscanAlgorithm::createNewCluster(
 		++it;
 	}
 
-	parentCluster.detachPoints(points.size(), edgeWeight);
+	parentCluster->detachPoints(points.size(), edgeWeight);
 
 	if (clusterLabel != 0)
-		return cluster(clusterLabel, &parentCluster, edgeWeight, points.size());
+		return cluster(clusterLabel, parentCluster, edgeWeight, points.size());
 
-	parentCluster.addPointsToVirtualChildCluster(points);
+	parentCluster->addPointsToVirtualChildCluster(points);
+	return cluster();
 }
 /// <summary>
 /// Calculates the number of constraints satisfied by the new clusters and virtual children of the

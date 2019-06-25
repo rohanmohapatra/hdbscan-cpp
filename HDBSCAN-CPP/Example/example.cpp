@@ -39,9 +39,15 @@ int Example::loadCsv(int numberOfValues, bool skipHeader) {
 	return 1;
 }
 
-void Example::execute() {
+void Example::execute(int minPoints,int minClusterSize,string distanceMetric) {
 	//Call The Runner Class here
 	hdbscanRunner runner;
+	hdbscanParameters parameters;
+	parameters.dataset = this->dataset;
+	parameters.minPoints = minPoints;
+	parameters.minClusterSize = minClusterSize;
+	parameters.distanceFunction = distanceMetric;
+	this->result = runner.run(parameters);
 	
 	
 }
