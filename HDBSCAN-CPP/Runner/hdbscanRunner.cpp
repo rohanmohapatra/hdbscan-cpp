@@ -70,25 +70,28 @@ hdbscanResult hdbscanRunner::run(hdbscanParameters parameters) {
 
 		std::vector< std::vector <int> > hierarchy;
 
-		std::vector<cluster*> clusters = algorithm.computeHierarchyAndClusterTree(
+		std::vector<cluster*> clusters;
+		algorithm.computeHierarchyAndClusterTree(
 			&mst,
 			parameters.minClusterSize,
 			parameters.constraints,
 			hierarchy,
 			pointNoiseLevels,
-			pointLastClusters);
-		
+			pointLastClusters,
+			clusters);
+		for (int i = 1; i < clusters.size(); i++) {
+			std::cout << clusters[i]->Label << std::endl;
+		}
 		bool infiniteStability = algorithm.propagateTree(clusters);
 		
-		/* std::vector<int> prominentClusters = algorithm.findProminentClusters(clusters, hierarchy, numPoints);
-		
+		std::vector<int> prominentClusters = algorithm.findProminentClusters(clusters, hierarchy, numPoints);
 		std::vector<outlierScore> scores = algorithm.calculateOutlierScores(
 			clusters,
 			pointNoiseLevels,
 			pointLastClusters,
 			coreDistances);
 		
-		return hdbscanResult(prominentClusters, scores, infiniteStability);*/
+		return hdbscanResult(prominentClusters, scores, infiniteStability);
 		
-		return result;
+		//return result;
 }
