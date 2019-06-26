@@ -68,7 +68,7 @@ namespace hdbscanStar
 		static cluster* createNewCluster(
 			std::set<int>& points,
 			std::vector<int> &clusterLabels,
-			cluster **parentCluster,
+			cluster *parentCluster,
 			int clusterLabel,
 			double edgeWeight);
 		
