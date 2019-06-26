@@ -80,7 +80,7 @@ hdbscanResult hdbscanRunner::run(hdbscanParameters parameters) {
 		
 		bool infiniteStability = algorithm.propagateTree(clusters);
 		
-		std::vector<int> prominentClusters = algorithm.findProminentClusters(clusters, hierarchy, numPoints);
+		/* std::vector<int> prominentClusters = algorithm.findProminentClusters(clusters, hierarchy, numPoints);
 		
 		std::vector<outlierScore> scores = algorithm.calculateOutlierScores(
 			clusters,
@@ -88,7 +88,7 @@ hdbscanResult hdbscanRunner::run(hdbscanParameters parameters) {
 			pointLastClusters,
 			coreDistances);
 		
-		return hdbscanResult(prominentClusters, scores, infiniteStability);
-		*/
+		return hdbscanResult(prominentClusters, scores, infiniteStability);*/
+		
 		return result;
 }

@@ -18,7 +18,7 @@ private:
 	static int counter;
 
 public:
-	std::vector<cluster> PropagatedDescendants;
+	std::vector<cluster*> PropagatedDescendants;
 	double PropagatedLowestChildDeathLevel;
 	cluster* Parent;
 	double Stability;

@@ -29,7 +29,7 @@ cluster::cluster(int label, cluster *parent, double birthLevel, int numPoints) /
 		if (Parent != NULL)
 			Parent->HasChildren = true;
 		HasChildren = false;
-		PropagatedDescendants.resize(1);
+		//PropagatedDescendants.resize(0);
 	}
 bool cluster ::operator==(const cluster& other) const {
 		return (this->_id == other._id);
@@ -59,18 +59,21 @@ void cluster::propagate()
 			{
 				Parent->_propagatedNumConstraintsSatisfied += _numConstraintsSatisfied;
 				Parent->_propagatedStability += Stability;
-				Parent->PropagatedDescendants.push_back(*this);
+				std::cout<<"size is"<<Parent->PropagatedDescendants.size()<<"\n";
+				Parent->PropagatedDescendants.push_back(this);
 			}
 			else if (_numConstraintsSatisfied > _propagatedNumConstraintsSatisfied)
 			{
 				Parent->_propagatedNumConstraintsSatisfied += _numConstraintsSatisfied;
 				Parent->_propagatedStability += Stability;
-				Parent->PropagatedDescendants.push_back(*this);
+				std::cout<<"size is"<<Parent->PropagatedDescendants.size()<<"\n";
+				Parent->PropagatedDescendants.push_back(this);
 			}
 			else if (_numConstraintsSatisfied < _propagatedNumConstraintsSatisfied)
 			{
 				Parent->_propagatedNumConstraintsSatisfied += _propagatedNumConstraintsSatisfied;
 				Parent->_propagatedStability += _propagatedStability;
+				std::cout<<"size is"<<Parent->PropagatedDescendants.size()<<"\n";
 				Parent->PropagatedDescendants.insert(Parent->PropagatedDescendants.end(), PropagatedDescendants.begin(), PropagatedDescendants.end());
 			}
 			else if (_numConstraintsSatisfied == _propagatedNumConstraintsSatisfied)
@@ -80,12 +83,13 @@ void cluster::propagate()
 				{
 					Parent->_propagatedNumConstraintsSatisfied += _numConstraintsSatisfied;
 					Parent->_propagatedStability += Stability;
-					Parent->PropagatedDescendants.push_back(*this);
+					Parent->PropagatedDescendants.push_back(this);
 				}
 				else
 				{
 					Parent->_propagatedNumConstraintsSatisfied += _propagatedNumConstraintsSatisfied;
 					Parent->_propagatedStability += _propagatedStability;
+					std::cout<<"size is"<<Parent->PropagatedDescendants.size()<<"\n";
 					Parent->PropagatedDescendants.insert(Parent->PropagatedDescendants.end(), PropagatedDescendants.begin(), PropagatedDescendants.end());
 				}
 			}

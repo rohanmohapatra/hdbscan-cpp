@@ -179,7 +179,7 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 	while (currentEdgeIndex >= 0)
 	{
 		double currentEdgeWeight = mst->getEdgeWeightAtIndex(currentEdgeIndex);
-		std::vector<cluster> newClusters;
+		std::vector<cluster*> newClusters;
 		while (currentEdgeIndex >= 0 && mst->getEdgeWeightAtIndex(currentEdgeIndex) == currentEdgeWeight)
 		{
 			int firstVertex = mst->getFirstVertexAtIndex(currentEdgeIndex);
@@ -289,7 +289,7 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 						cluster *newCluster = createNewCluster(constructingSubCluster, currentClusterLabels,
 								clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
 						std::cout<<newCluster<<"\n";
-						newClusters.push_back(*newCluster);
+						newClusters.push_back(newCluster);
 						clusters.push_back(newCluster);
 						nextClusterLabel++;
 					}
@@ -338,7 +338,7 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 						clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
 				std::cout<<newCluster<<"\n";
 
-				newClusters.push_back(*newCluster);
+				newClusters.push_back(newCluster);
 				clusters.push_back(newCluster);
 				nextClusterLabel++;
 			}
@@ -352,11 +352,11 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 			hierarchyPosition++;
 		}
 		std::set<int> newClusterLabels;
-		for(std::vector<cluster>::iterator it=newClusters.begin(); it!=newClusters.end();it++)
+		for(std::vector<cluster *>::iterator it=newClusters.begin(); it!=newClusters.end();it++)
 		{
-			cluster newCluster = *it;
-			newCluster.HierarchyPosition = hierarchyPosition;
-			newClusterLabels.insert(newCluster.Label);
+			cluster* newCluster = *it;
+			newCluster->HierarchyPosition = hierarchyPosition;
+			newClusterLabels.insert(newCluster->Label);
 		}
 		if (newClusterLabels.size())
 			calculateNumConstraintsSatisfied(newClusterLabels, clusters, constraints, currentClusterLabels);
@@ -379,7 +379,7 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 	}
 	return clusters;
 }
-std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vector<cluster*> &clusters, std::vector<std::vector<int>> &hierarchy, int numPoints)
+/* std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vector<cluster*> &clusters, std::vector<std::vector<int>> &hierarchy, int numPoints)
 {
 	//Take the list of propagated clusters from the root cluster:
 	std::vector<cluster> solution = clusters[1]->PropagatedDescendants;
@@ -417,47 +417,59 @@ std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vecto
 		}
 	}
 	return flatPartitioning;
-}
+}*/
 
 bool hdbscanStar::hdbscanAlgorithm::propagateTree(std::vector<cluster*> clusters)
 {
-	std::map<int, cluster> clustersToExamine;
+	std::map<int, cluster*> clustersToExamine;
 	bitSet addedToExaminationList;
 	bool infiniteStability = false;
 
 	//Find all leaf clusters in the cluster tree:
+	std::cout<<"before for loop\n";
+	std::cout<<"size of clusters "<<clusters.size()<<"\n";
+	
 	for(cluster* cluster : clusters)
 	{
 		if (cluster != NULL && !cluster->HasChildren)
 		{
 			int label = cluster->Label;
+			std::cout<<"before erase\n";
 			clustersToExamine.erase(label);
-			clustersToExamine.insert({ label, *cluster });
+			std::cout<<"after erase\n";
+			std::cout<<cluster<<std::endl;
+			clustersToExamine.insert({ label, cluster });
+			std::cout<<"before set\n";
 			addedToExaminationList.set(label);
+			std::cout<<"after set\n";
 		}
 	}
-
+	std::cout<<"finsihed for loop\n";
 	//Iterate through every cluster, propagating stability from children to parents:
+	std::cout<<"size of clusters to examine "<<clustersToExamine.size()<<"\n";
 	while (clustersToExamine.size())
 	{
-		std::map<int, cluster>::iterator currentKeyValue = clustersToExamine.end();
-		cluster currentCluster = currentKeyValue->second;
+		std::map<int, cluster*>::iterator currentKeyValue = prev(clustersToExamine.end());
+		cluster *currentCluster = currentKeyValue->second;
+		std::cout<<"Label is "<<currentCluster->Label<<" and heirarchy is "<<currentCluster->HierarchyPosition<<"\n";
 		clustersToExamine.erase(currentKeyValue->first);
+		std::cout<<"before propage called\n";
+		std::cout<<currentCluster->Parent->PropagatedDescendants.size()<<"\n";
+		currentCluster->propagate();
+		std::cout<<"after propage called\n";
 
-		currentCluster.propagate();
-
-		if (currentCluster.Stability == std::numeric_limits<double>::infinity())
+		if (currentCluster->Stability == std::numeric_limits<double>::infinity())
 			infiniteStability = true;
 
-		if (currentCluster.Parent != NULL)
+		if (currentCluster->Parent != NULL)
 		{
-			cluster *parent = currentCluster.Parent;
+			cluster *parent = currentCluster->Parent;
 			int label = parent->Label;
 
 			if (!addedToExaminationList.get(label))
 			{
 				clustersToExamine.erase(label);
-				clustersToExamine.insert({ label, *parent });
+				clustersToExamine.insert({ label, parent });
 				addedToExaminationList.set(label);
 			}
 		}
