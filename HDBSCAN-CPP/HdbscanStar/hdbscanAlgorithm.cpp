@@ -285,15 +285,24 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 						numChildClusters--;
 					//Otherwise, c a new cluster:
 					{
-						cluster newCluster = createNewCluster(constructingSubCluster, currentClusterLabels,
+						std::cout<<clusters[examinedClusterLabel]<<" if\n";
+						cluster *newCluster = createNewCluster(constructingSubCluster, currentClusterLabels,
 								clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
-						newClusters.push_back(newCluster);
-						clusters.push_back(&newCluster);
+						std::cout<<newCluster<<"\n";
+						newClusters.push_back(*newCluster);
+						clusters.push_back(newCluster);
 						nextClusterLabel++;
 					}
 				}
 				else if (constructingSubCluster.size() < minClusterSize || !anyEdges)
 				{
+					std::cout<<clusters[examinedClusterLabel]<<" else if ";
+					//std::cout<<examinedClusterLabel<<"\n";
+					for(int i=0;i<clusters.size();i++)
+					{
+						std::cout<<clusters[i]<< " ";
+					}
+					std::cout<<"\n";
 					createNewCluster(constructingSubCluster, currentClusterLabels,
 							clusters[examinedClusterLabel], 0, currentEdgeWeight);
 
@@ -322,12 +331,15 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 					}
 				}
 				//std::cout << "Id: "<< clusters[examinedClusterLabel]->getClusterId()<< std::endl;
-				cluster* mustPassThis = clusters[examinedClusterLabel - 1];
-				cluster test = createNewCluster(firstChildCluster, currentClusterLabels,mustPassThis, nextClusterLabel, currentEdgeWeight);
-				cluster newCluster = createNewCluster(firstChildCluster, currentClusterLabels,
-						&(*clusters[examinedClusterLabel]), nextClusterLabel, currentEdgeWeight);
-				newClusters.push_back(newCluster);
-				clusters.push_back(&newCluster);
+				//cluster* mustPassThis = clusters[examinedClusterLabel - 1];
+				std::cout<<clusters[examinedClusterLabel]<<" outside if\n";
+				//cluster test = createNewCluster(firstChildCluster, currentClusterLabels,mustPassThis, nextClusterLabel, currentEdgeWeight);
+				cluster *newCluster = createNewCluster(firstChildCluster, currentClusterLabels,
+						clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
+				std::cout<<newCluster<<"\n";
+
+				newClusters.push_back(*newCluster);
+				clusters.push_back(newCluster);
 				nextClusterLabel++;
 			}
 		}
@@ -500,27 +512,35 @@ std::vector<outlierScore> hdbscanStar::hdbscanAlgorithm::calculateOutlierScores(
 /// <param name="clusterLabel">The label of the new Cluster </param>
 /// <param name="edgeWeight">The edge weight at which to remove the points from their previous Cluster</param>
 /// <returns>The new Cluster, or null if the clusterId was 0</returns>
-cluster hdbscanStar::hdbscanAlgorithm::createNewCluster(
-	std::set<int> points,
+cluster* hdbscanStar::hdbscanAlgorithm::createNewCluster(
+	std::set<int>& points,
 	std::vector<int> &clusterLabels,
 	cluster *parentCluster,
 	int clusterLabel,
 	double edgeWeight)
 {
+	std::cout<<"entered "<<parentCluster<<"\n";
 	std::set<int>::iterator it = points.begin();
 	while(it!= points.end())
 	{
 		clusterLabels[*it] = clusterLabel;
 		++it;
 	}
-
+	std::cout<<"before detaching\n";
 	parentCluster->detachPoints(points.size(), edgeWeight);
+	std::cout<<"detachedPoints\n";
 
 	if (clusterLabel != 0)
-		return cluster(clusterLabel, parentCluster, edgeWeight, points.size());
+	{
+		//cluster cluster_obj(clusterLabel, parentCluster, edgeWeight, points.size());
+		//std::cout<<"I'm being returned "<<&cluster_obj<<std::endl;
+		//return cluster_obj;
+		return new cluster(clusterLabel, parentCluster, edgeWeight, points.size());
+	}
 
 	parentCluster->addPointsToVirtualChildCluster(points);
-	return cluster();
+	std::cout<<"outside\n";
+	return NULL;
 }
 /// <summary>
 /// Calculates the number of constraints satisfied by the new clusters and virtual children of the
@@ -531,11 +551,12 @@ cluster hdbscanStar::hdbscanAlgorithm::createNewCluster(
 /// <param name="constraints">An List of constraints</param>
 /// <param name="clusterLabels">An array of current cluster labels for points</param>
 void hdbscanStar::hdbscanAlgorithm::calculateNumConstraintsSatisfied(
-	std::set<int> newClusterLabels,
-	std::vector<cluster*> clusters,
-	std::vector<hdbscanConstraint> constraints,
-	std::vector<int> clusterLabels)
+	std::set<int> &newClusterLabels,
+	std::vector<cluster*> &clusters,
+	std::vector<hdbscanConstraint> &constraints,
+	std::vector<int> &clusterLabels)
 {
+
 	if (constraints.size() == 0)
 		return;
 

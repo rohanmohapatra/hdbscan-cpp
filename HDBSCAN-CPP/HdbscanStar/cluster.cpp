@@ -1,21 +1,27 @@
 #include"cluster.hpp"
+#include <iostream>
 int cluster::counter = 0;
 cluster ::cluster()
 	{
+		
 		_id = ++counter;
+		std::cout<<"default constructor and_id is"<<_id<<"\n";
 	}
 
-cluster::cluster(int label, cluster *parent, double birthLevel, int numPoints) :Label(label), Parent(parent), _birthLevel(birthLevel), _numPoints(numPoints)
+cluster::cluster(int label, cluster *parent, double birthLevel, int numPoints) //:Label(label), Parent(parent), _birthLevel(birthLevel), _numPoints(numPoints)
 	{
-
 		_id = ++counter;
+		std::cout<<"parametrized constructor and _id is"<<_id<<"\n";
 		_deathLevel = 0;
 
 		_propagatedStability = 0;
 		_numConstraintsSatisfied = 0;
 		_propagatedNumConstraintsSatisfied = 0;
 
-
+		Parent = parent;
+		Label = label;
+		_birthLevel=birthLevel;
+		_numPoints=numPoints;
 		HierarchyPosition = 0;
 		Stability = 0;
 		PropagatedLowestChildDeathLevel = std::numeric_limits<double>::max();
@@ -31,6 +37,8 @@ bool cluster ::operator==(const cluster& other) const {
 void cluster::detachPoints(int numPoints, double level)
 	{
 		_numPoints -= numPoints;
+		std::cout<<"numPoints is "<<numPoints<<"\n";
+		std::cout<<"_numPoints is"<<_numPoints<<"\n";
 		Stability += (numPoints * (1 / level - 1 / _birthLevel));
 
 		if (_numPoints == 0)
