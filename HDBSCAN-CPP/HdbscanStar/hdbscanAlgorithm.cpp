@@ -144,7 +144,7 @@ undirectedGraph hdbscanStar::hdbscanAlgorithm::constructMst(std::vector<std::vec
 /// <param name="clusters">A list of Clusters forming a cluster tree</param>
 /// <returns>true if there are any clusters with infinite stability, false otherwise</returns>
 
-std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGraph *mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> &hierarchy, std::vector<double> &pointNoiseLevels, std::vector<int> &pointLastClusters)
+void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGraph *mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> &hierarchy, std::vector<double> &pointNoiseLevels, std::vector<int> &pointLastClusters, std::vector<cluster*>& clusters)
 {
 	int hierarchyPosition = 0;
 
@@ -162,10 +162,10 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 		currentClusterLabels[i] = 1;
 		previousClusterLabels[i] = 1;
 	}
-	std::vector<cluster *> clusters;
+	//std::vector<cluster *> clusters;
 	clusters.push_back(NULL);
-	cluster cluster_object(1, NULL, std::numeric_limits<double>::quiet_NaN(),  mst->getNumVertices());
-	clusters.push_back(&cluster_object);
+	//cluster cluster_object(1, NULL, std::numeric_limits<double>::quiet_NaN(),  mst->getNumVertices());
+	clusters.push_back(new cluster(1, NULL, std::numeric_limits<double>::quiet_NaN(), mst->getNumVertices()));
 
 	std::set<int> clusterOne;
 	clusterOne.insert(1);
@@ -377,25 +377,24 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 			lineContents[i] = 0;
 		hierarchy.push_back(lineContents);
 	}
-	return clusters;
 }
-/* std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vector<cluster*> &clusters, std::vector<std::vector<int>> &hierarchy, int numPoints)
+std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vector<cluster*> &clusters, std::vector<std::vector<int>> &hierarchy, int numPoints)
 {
 	//Take the list of propagated clusters from the root cluster:
-	std::vector<cluster> solution = clusters[1]->PropagatedDescendants;
+	std::vector<cluster*> solution = clusters[1]->PropagatedDescendants;
 	std::vector<int> flatPartitioning(numPoints);
 
 	//Store all the hierarchy positions at which to find the birth points for the flat clustering:
 	std::map<int, std::vector<int>> significantHierarchyPositions;
 
-	std::vector<cluster>::iterator it = solution.begin();
+	std::vector<cluster*>::iterator it = solution.begin();
 	while(it!=solution.end())
 	{
-		int hierarchyPosition=(*it).HierarchyPosition;
+		int hierarchyPosition=(*it)->HierarchyPosition;
 		if(significantHierarchyPositions.count(hierarchyPosition) > 0)
-			significantHierarchyPositions[hierarchyPosition].push_back((*it).Label);
+			significantHierarchyPositions[hierarchyPosition].push_back((*it)->Label);
 		else
-			significantHierarchyPositions[hierarchyPosition].resize((*it).Label);
+			significantHierarchyPositions[hierarchyPosition].push_back((*it)->Label);
 		it++;
 	}
 
@@ -417,9 +416,9 @@ std::vector<cluster *> hdbscanStar::hdbscanAlgorithm::computeHierarchyAndCluster
 		}
 	}
 	return flatPartitioning;
-}*/
+}
 
-bool hdbscanStar::hdbscanAlgorithm::propagateTree(std::vector<cluster*> clusters)
+bool hdbscanStar::hdbscanAlgorithm::propagateTree(std::vector<cluster*> &clusters)
 {
 	std::map<int, cluster*> clustersToExamine;
 	bitSet addedToExaminationList;
@@ -451,12 +450,9 @@ bool hdbscanStar::hdbscanAlgorithm::propagateTree(std::vector<cluster*> clusters
 	{
 		std::map<int, cluster*>::iterator currentKeyValue = prev(clustersToExamine.end());
 		cluster *currentCluster = currentKeyValue->second;
-		std::cout<<"Label is "<<currentCluster->Label<<" and heirarchy is "<<currentCluster->HierarchyPosition<<"\n";
 		clustersToExamine.erase(currentKeyValue->first);
-		std::cout<<"before propage called\n";
-		std::cout<<currentCluster->Parent->PropagatedDescendants.size()<<"\n";
+		//std::cout<<currentCluster->Parent->PropagatedDescendants.size()<<"\n";
 		currentCluster->propagate();
-		std::cout<<"after propage called\n";
 
 		if (currentCluster->Stability == std::numeric_limits<double>::infinity())
 			infiniteStability = true;
@@ -494,7 +490,7 @@ std::vector<outlierScore> hdbscanStar::hdbscanAlgorithm::calculateOutlierScores(
 	std::vector<double> coreDistances)
 {
 	int numPoints = pointNoiseLevels.size();
-	std::vector<outlierScore> outlierScores(numPoints);
+	std::vector<outlierScore> outlierScores;
 
 	//Iterate through each point, calculating its outlier score:
 	for (int i = 0; i < numPoints; i++)

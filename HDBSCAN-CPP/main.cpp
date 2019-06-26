@@ -49,7 +49,7 @@ int main() {
 	a[0] = e;
 	cout << &a[0] << " " << &e << endl;
 	*/
-	Example example("../HDBSCANDataset/Dataset.csv");
+	Example example("../HDBSCANDataset/Data_test_3.csv");
 	example.loadCsv(2);
 	vector<vector <double>> dataset = example.dataset;
 	example.execute(5, 5, "Euclidean");

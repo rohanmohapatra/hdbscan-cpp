@@ -29,7 +29,7 @@ cluster::cluster(int label, cluster *parent, double birthLevel, int numPoints) /
 		if (Parent != NULL)
 			Parent->HasChildren = true;
 		HasChildren = false;
-		//PropagatedDescendants.resize(0);
+		PropagatedDescendants.resize(0);
 	}
 bool cluster ::operator==(const cluster& other) const {
 		return (this->_id == other._id);
