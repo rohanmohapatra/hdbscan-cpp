@@ -34,11 +34,11 @@ namespace hdbscanStar
 		/// <param name="clusters">A list of Clusters forming a cluster tree</param>
 		/// <returns>true if there are any clusters with infinite stability, false otherwise</returns>
 
-		static std::vector<cluster*> computeHierarchyAndClusterTree(undirectedGraph *mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> &hierarchy, std::vector<double> &pointNoiseLevels, std::vector<int> &pointLastClusters);
+		static void computeHierarchyAndClusterTree(undirectedGraph *mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> &hierarchy, std::vector<double> &pointNoiseLevels, std::vector<int> &pointLastClusters, std::vector<cluster*> &clusters);
 		
 		static std::vector<int> findProminentClusters(std::vector<cluster*> &clusters, std::vector<std::vector<int>> &hierarchy, int numPoints);
 
-		static bool propagateTree(std::vector<cluster*> clusters);
+		static bool propagateTree(std::vector<cluster*> &sclusters);
 		
 		/// <summary>
 		/// Produces the outlier score for each point in the data set, and returns a sorted list of outlier
@@ -65,8 +65,8 @@ namespace hdbscanStar
 		/// <param name="clusterLabel">The label of the new Cluster </param>
 		/// <param name="edgeWeight">The edge weight at which to remove the points from their previous Cluster</param>
 		/// <returns>The new Cluster, or null if the clusterId was 0</returns>
-		static cluster createNewCluster(
-			std::set<int> points,
+		static cluster* createNewCluster(
+			std::set<int>& points,
 			std::vector<int> &clusterLabels,
 			cluster **parentCluster,
 			int clusterLabel,
@@ -81,10 +81,10 @@ namespace hdbscanStar
 		/// <param name="constraints">An List of constraints</param>
 		/// <param name="clusterLabels">An array of current cluster labels for points</param>
 		static void calculateNumConstraintsSatisfied(
-			std::set<int> newClusterLabels,
-			std::vector<cluster*> clusters,
-			std::vector<hdbscanConstraint> constraints,
-			std::vector<int> clusterLabels);
+			std::set<int>& newClusterLabels,
+			std::vector<cluster*>& clusters,
+			std::vector<hdbscanConstraint>& constraints,
+			std::vector<int>& clusterLabels);
 		
 	};
 
