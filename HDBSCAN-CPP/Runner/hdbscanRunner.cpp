@@ -58,13 +58,7 @@ hdbscanResult hdbscanRunner::run(hdbscanParameters parameters) {
 			coreDistances,
 			true);
 		mst.quicksortByEdgeWeight();
-		cout << endl;
-		for (int i = 0; i < mst.getNumVertices(); i++) {
-			for (int j = 0; j < mst.getEdgeListForVertex(i).size(); j++) {
-				cout << mst.getEdgeListForVertex(i)[j] << " ";
-			}
-			cout << endl;
-		}
+
 		std::vector<double> pointNoiseLevels(numPoints);
 		std::vector<int> pointLastClusters(numPoints);
 
@@ -79,9 +73,6 @@ hdbscanResult hdbscanRunner::run(hdbscanParameters parameters) {
 			pointNoiseLevels,
 			pointLastClusters,
 			clusters);
-		for (int i = 1; i < clusters.size(); i++) {
-			std::cout << clusters[i]->Label << std::endl;
-		}
 		bool infiniteStability = algorithm.propagateTree(clusters);
 		
 		std::vector<int> prominentClusters = algorithm.findProminentClusters(clusters, hierarchy, numPoints);
@@ -92,6 +83,4 @@ hdbscanResult hdbscanRunner::run(hdbscanParameters parameters) {
 			coreDistances);
 		
 		return hdbscanResult(prominentClusters, scores, infiniteStability);
-		
-		//return result;
 }

@@ -1,14 +1,15 @@
-#include "example.hpp"
+#include "hdbscan.hpp"
 #include<iostream>
 #include<fstream>
 #include<sstream>
+#include<set>
 using namespace std;
 
-string Example::getFileName() {
+string Hdbscan::getFileName() {
 	return this->fileName;
 }
 
-int Example::loadCsv(int numberOfValues, bool skipHeader) {
+int Hdbscan::loadCsv(int numberOfValues, bool skipHeader) {
 	string  attribute;
 
 	string line = "";
@@ -39,7 +40,7 @@ int Example::loadCsv(int numberOfValues, bool skipHeader) {
 	return 1;
 }
 
-void Example::execute(int minPoints,int minClusterSize,string distanceMetric) {
+void Hdbscan::execute(int minPoints,int minClusterSize,string distanceMetric) {
 	//Call The Runner Class here
 	hdbscanRunner runner;
 	hdbscanParameters parameters;
@@ -49,24 +50,26 @@ void Example::execute(int minPoints,int minClusterSize,string distanceMetric) {
 	parameters.distanceFunction = distanceMetric;
 	this->result = runner.run(parameters);
 	
-	
+	this->labels_ = result.labels;
+	this->outlierScores_ = result.outliersScores;
 }
 
-void Example::displayResult() {
+void Hdbscan::displayResult() {
 	hdbscanResult result = this->result;
 	uint32_t numClusters = 0;
 	uint32_t noisyPoints = 0;
-	cout << "HDBSCAN clustering for " << this->dataset.size() << " objects.";
+	set<int> numClustersSet;
+	cout << "HDBSCAN clustering for " << this->dataset.size() << " objects." << endl << endl;
 	for(uint32_t i=0;i<result.labels.size();i++){
 		cout << result.labels[i] << " ";
 		if (result.labels[i] == 0) {
 			noisyPoints++;
 		}
 		else {
-			numClusters++;
+			numClustersSet.insert(result.labels[i]);
 		}
 	}
-
-	cout << "The Clustering contains " << numClusters << " " << noisyPoints << " noise Points"<<endl;
+	cout << endl << endl;
+	cout << "The Clustering contains " << numClustersSet.size() << " clusters with " << noisyPoints << " noise Points."<<endl;
 
 }

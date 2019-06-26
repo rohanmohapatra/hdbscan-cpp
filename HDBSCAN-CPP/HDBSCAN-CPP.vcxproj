@@ -123,31 +123,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="distance\IDistanceCalculator.cpp" />
-    <ClCompile Include="distance\EuclideanDistance.cpp" />
-    <ClCompile Include="distance\ManhattanDistance.cpp" />
+    <ClCompile Include="Distance\EuclideanDistance.cpp" />
+    <ClCompile Include="Distance\IDistanceCalculator.cpp" />
+    <ClCompile Include="Distance\ManhattanDistance.cpp" />
     <ClCompile Include="HdbscanStar\cluster.cpp" />
     <ClCompile Include="HdbscanStar\hdbscanAlgorithm.cpp" />
     <ClCompile Include="HdbscanStar\hdbscanConstraint.cpp" />
     <ClCompile Include="HdbscanStar\outlierScore.cpp" />
     <ClCompile Include="HdbscanStar\undirectedGraph.cpp" />
+    <ClCompile Include="Hdbscan\hdbscan.cpp" />
     <ClCompile Include="Runner\hdbscanParameters.cpp" />
     <ClCompile Include="Runner\hdbscanResult.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Example\example.cpp" />
     <ClCompile Include="Runner\hdbscanRunner.cpp" />
     <ClCompile Include="Utils\bitSet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="distance\EuclideanDistance.hpp" />
-    <ClInclude Include="Example\example.hpp" />
-    <ClInclude Include="distance\IDistanceCalculator.hpp" />
-    <ClInclude Include="distance\ManhattanDistance.hpp" />
+    <ClInclude Include="Distance\EuclideanDistance.hpp" />
+    <ClInclude Include="Distance\IDistanceCalculator.hpp" />
+    <ClInclude Include="Distance\ManhattanDistance.hpp" />
     <ClInclude Include="HdbscanStar\cluster.hpp" />
     <ClInclude Include="HdbscanStar\hdbscanAlgorithm.hpp" />
     <ClInclude Include="HdbscanStar\hdbscanConstraint.hpp" />
     <ClInclude Include="HdbscanStar\outlierScore.hpp" />
     <ClInclude Include="HdbscanStar\undirectedGraph.hpp" />
+    <ClInclude Include="Hdbscan\hdbscan.hpp" />
     <ClInclude Include="Runner\hdbscanParameters.hpp" />
     <ClInclude Include="Runner\hdbscanResult.hpp" />
     <ClInclude Include="Runner\hdbscanRunner.hpp" />

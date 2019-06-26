@@ -4,11 +4,12 @@
 #include"../Runner/hdbscanRunner.hpp"
 #include"../Runner/hdbscanParameters.hpp"
 #include"../Runner/hdbscanResult.hpp"
+#include"../HdbscanStar/outlierScore.hpp"
 
 using namespace std;
 
 
-class Example
+class Hdbscan
 
 {
 
@@ -16,16 +17,18 @@ private:
 
 	string fileName;
 
-
+	hdbscanResult result;
 
 public:
 
 	vector < vector <double > > dataset;
 
-	hdbscanResult result;
+	std::vector<int> labels_;
+
+	std::vector<outlierScore>outlierScores_;
 
 
-	Example(string readFileName) {
+	Hdbscan(string readFileName) {
 
 		fileName = readFileName;
 

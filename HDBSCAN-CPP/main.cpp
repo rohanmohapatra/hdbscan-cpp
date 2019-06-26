@@ -1,7 +1,6 @@
 #include<iostream>
 #include<cstdio>
-#include"Example/example.hpp"
-#include"HdbscanStar/cluster.hpp"
+#include"Hdbscan/hdbscan.hpp"
 using namespace std;
 
 //using namespace csv;
@@ -49,11 +48,11 @@ int main() {
 	a[0] = e;
 	cout << &a[0] << " " << &e << endl;
 	*/
-	Example example("../HDBSCANDataset/Data_test_3.csv");
-	example.loadCsv(2);
-	vector<vector <double>> dataset = example.dataset;
-	example.execute(5, 5, "Euclidean");
-	example.displayResult();
+	Hdbscan hdbscan("../HDBSCANDataset/Data_test_3.csv");
+	hdbscan.loadCsv(2);
+	vector<vector <double>> dataset = hdbscan.dataset;
+	hdbscan.execute(5, 5, "Euclidean");
+	hdbscan.displayResult();
 	return 0;
 
 }
