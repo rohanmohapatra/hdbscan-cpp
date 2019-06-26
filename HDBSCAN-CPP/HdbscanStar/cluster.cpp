@@ -2,15 +2,14 @@
 int cluster::counter = 0;
 cluster ::cluster()
 	{
-		_id = ++counter;
 	}
 
-cluster::cluster(int label, cluster *parent, double birthLevel, int numPoints) :Label(label), Parent(parent), _birthLevel(birthLevel), _numPoints(numPoints)
+cluster::cluster(int label, cluster *parent, double birthLevel, int numPoints) :Label(label), _birthLevel(birthLevel), _numPoints(numPoints)
 	{
 
 		_id = ++counter;
 		_deathLevel = 0;
-
+		Parent = parent;
 		_propagatedStability = 0;
 		_numConstraintsSatisfied = 0;
 		_propagatedNumConstraintsSatisfied = 0;
@@ -23,7 +22,7 @@ cluster::cluster(int label, cluster *parent, double birthLevel, int numPoints) :
 		if (Parent != NULL)
 			Parent->HasChildren = true;
 		HasChildren = false;
-		PropagatedDescendants.resize(1);
+		//PropagatedDescendants.resize(1);
 	}
 bool cluster ::operator==(const cluster& other) const {
 		return (this->_id == other._id);
