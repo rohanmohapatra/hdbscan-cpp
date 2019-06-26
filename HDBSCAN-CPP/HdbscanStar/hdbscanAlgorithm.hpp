@@ -65,8 +65,8 @@ namespace hdbscanStar
 		/// <param name="clusterLabel">The label of the new Cluster </param>
 		/// <param name="edgeWeight">The edge weight at which to remove the points from their previous Cluster</param>
 		/// <returns>The new Cluster, or null if the clusterId was 0</returns>
-		static cluster createNewCluster(
-			std::set<int> points,
+		static cluster* createNewCluster(
+			std::set<int>& points,
 			std::vector<int> &clusterLabels,
 			cluster *parentCluster,
 			int clusterLabel,
@@ -81,10 +81,10 @@ namespace hdbscanStar
 		/// <param name="constraints">An List of constraints</param>
 		/// <param name="clusterLabels">An array of current cluster labels for points</param>
 		static void calculateNumConstraintsSatisfied(
-			std::set<int> newClusterLabels,
-			std::vector<cluster*> clusters,
-			std::vector<hdbscanConstraint> constraints,
-			std::vector<int> clusterLabels);
+			std::set<int>& newClusterLabels,
+			std::vector<cluster*>& clusters,
+			std::vector<hdbscanConstraint>& constraints,
+			std::vector<int>& clusterLabels);
 		
 	};
 
