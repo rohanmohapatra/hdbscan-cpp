@@ -25,7 +25,14 @@ public:
 
 	std::vector<int> labels_;
 
+	std::vector<int> normalizedLabels_;
+
 	std::vector<outlierScore>outlierScores_;
+
+	uint32_t noisyPoints_;
+
+	uint32_t numClusters_;
+
 
 
 	Hdbscan(string readFileName) {

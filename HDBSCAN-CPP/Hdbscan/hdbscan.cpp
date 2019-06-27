@@ -3,6 +3,7 @@
 #include<fstream>
 #include<sstream>
 #include<set>
+#include<map>
 using namespace std;
 
 string Hdbscan::getFileName() {
@@ -44,6 +45,11 @@ void Hdbscan::execute(int minPoints,int minClusterSize,string distanceMetric) {
 	//Call The Runner Class here
 	hdbscanRunner runner;
 	hdbscanParameters parameters;
+	uint32_t noisyPoints = 0;
+	set<int> numClustersSet;
+	map<int, int> clustersMap;
+	vector<int> normalizedLabels;
+
 	parameters.dataset = this->dataset;
 	parameters.minPoints = minPoints;
 	parameters.minClusterSize = minClusterSize;
@@ -52,16 +58,7 @@ void Hdbscan::execute(int minPoints,int minClusterSize,string distanceMetric) {
 	
 	this->labels_ = result.labels;
 	this->outlierScores_ = result.outliersScores;
-}
-
-void Hdbscan::displayResult() {
-	hdbscanResult result = this->result;
-	uint32_t numClusters = 0;
-	uint32_t noisyPoints = 0;
-	set<int> numClustersSet;
-	cout << "HDBSCAN clustering for " << this->dataset.size() << " objects." << endl << endl;
-	for(uint32_t i=0;i<result.labels.size();i++){
-		cout << result.labels[i] << " ";
+	for (uint32_t i = 0; i < result.labels.size(); i++) {
 		if (result.labels[i] == 0) {
 			noisyPoints++;
 		}
@@ -69,7 +66,35 @@ void Hdbscan::displayResult() {
 			numClustersSet.insert(result.labels[i]);
 		}
 	}
-	cout << endl << endl;
-	cout << "The Clustering contains " << numClustersSet.size() << " clusters with " << noisyPoints << " noise Points."<<endl;
+	this->numClusters_ = numClustersSet.size();
+	this->noisyPoints_ = noisyPoints;
+	int iNdex = 1;
+	for (auto it = numClustersSet.begin(); it != numClustersSet.end(); it++) {
+		clustersMap[*it] = iNdex++;
+	}
+	for (int i = 0; i < labels_.size(); i++) {
+		if (labels_[i] != 0)
+			normalizedLabels.push_back(clustersMap[labels_[i]]);
+		else if (labels_[i] == 0) {
+			normalizedLabels.push_back(-1);
+		}
+			
+	}
+	this->normalizedLabels_ = normalizedLabels;
+}
 
+void Hdbscan::displayResult() {
+	hdbscanResult result = this->result;
+	uint32_t numClusters = 0;
+
+	cout << "HDBSCAN clustering for " << this->dataset.size() << " objects." << endl << endl;
+	
+	for (uint32_t i = 0; i < result.labels.size(); i++) {
+		cout << result.labels[i] << " ";
+	}
+
+	cout << endl << endl;
+
+	cout << "The Clustering contains " << this->numClusters_ << " clusters with " << this->noisyPoints_ << " noise Points."<<endl;
+	
 }
