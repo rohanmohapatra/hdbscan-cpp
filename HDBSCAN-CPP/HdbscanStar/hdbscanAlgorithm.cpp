@@ -283,6 +283,7 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 					if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), firstChildClusterMember) != constructingSubCluster.end())
 						numChildClusters--;
 					//Otherwise, c a new cluster:
+					else
 					{
 						cluster* newCluster = createNewCluster(constructingSubCluster, currentClusterLabels,
 							clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
