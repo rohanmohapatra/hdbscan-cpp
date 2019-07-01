@@ -49,6 +49,7 @@ hdbscanResult hdbscanRunner::run(hdbscanParameters parameters) {
 		parameters.distances = distances;
 	}
 
+<<<<<<< HEAD
 	std::vector <double> coreDistances = algorithm.calculateCoreDistances(
 		parameters.distances,
 		parameters.minPoints);
@@ -83,4 +84,40 @@ hdbscanResult hdbscanRunner::run(hdbscanParameters parameters) {
 		coreDistances);
 
 	return hdbscanResult(prominentClusters, scores, infiniteStability);
+=======
+		std::vector <double> coreDistances = algorithm.calculateCoreDistances(
+			parameters.distances,
+			parameters.minPoints);
+
+		undirectedGraph mst = algorithm.constructMst(
+			parameters.distances,
+			coreDistances,
+			true);
+		mst.quicksortByEdgeWeight();
+
+		std::vector<double> pointNoiseLevels(numPoints);
+		std::vector<int> pointLastClusters(numPoints);
+
+		std::vector< std::vector <int> > hierarchy;
+
+		std::vector<cluster*> clusters;
+		algorithm.computeHierarchyAndClusterTree(
+			&mst,
+			parameters.minClusterSize,
+			parameters.constraints,
+			hierarchy,
+			pointNoiseLevels,
+			pointLastClusters,
+			clusters);
+		bool infiniteStability = algorithm.propagateTree(clusters);
+		
+		std::vector<int> prominentClusters = algorithm.findProminentClusters(clusters, hierarchy, numPoints);
+		std::vector<outlierScore> scores = algorithm.calculateOutlierScores(
+			clusters,
+			pointNoiseLevels,
+			pointLastClusters,
+			coreDistances);
+		
+		return hdbscanResult(prominentClusters, scores, infiniteStability);
+>>>>>>> 399c3973b6eaf2b74d3efd9c932944db7afa9de1
 }

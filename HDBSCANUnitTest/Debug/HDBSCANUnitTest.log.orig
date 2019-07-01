@@ -1,5 +1,8 @@
+﻿  pch.cpp
+  HDBSCANUnitTest.cpp
 <<<<<<< HEAD
-﻿  HDBSCANUnitTest.cpp
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(6,9): error C1083:  Cannot open include file: '../HDBSCAN-CPP/Example/example.hpp': No such file or directory
+=======
 C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(229,62): warning C4244:  'argument': conversion from '_Ty' to 'int', possible loss of data
 C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(229,62): warning C4244:         with
 C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(229,62): warning C4244:         [
@@ -26,9 +29,4 @@ C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(3
 C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCANUnitTest\HDBSCANUnitTest.cpp(335,21): warning C4018:  '<': signed/unsigned mismatch
      Creating library C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Debug\HDBSCANUnitTest.lib and object C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Debug\HDBSCANUnitTest.exp
   HDBSCANUnitTest.vcxproj -> C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Debug\HDBSCANUnitTest.dll
-=======
-﻿  pch.cpp
-  HDBSCANUnitTest.cpp
-C:\Users\sbasarko\OneDrive - Itron\Documents\github_c++\hdbscan-cpp\HDBSCANUnitTest\HDBSCANUnitTest.cpp(144,1): error C2653:  'hdbscanAlgorithm': is not a class or namespace name
-C:\Users\sbasarko\OneDrive - Itron\Documents\github_c++\hdbscan-cpp\HDBSCANUnitTest\HDBSCANUnitTest.cpp(144,58): error C3861:  'calculateCoreDistances': identifier not found
->>>>>>> 72f43b413361d7a025414fa0e86c587c801ee90f
+>>>>>>> 399c3973b6eaf2b74d3efd9c932944db7afa9de1

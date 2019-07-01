@@ -42,16 +42,27 @@ int main() {
 		std::cout << &(*i) << ' ';
 	for (int i = 0; i < test.size(); ++i)
 		printf("%p\n", &test[i]);
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 399c3973b6eaf2b74d3efd9c932944db7afa9de1
 	int e = 100;
 	int a[10];
 	a[0] = e;
 	cout << &a[0] << " " << &e << endl;
 	*/
+<<<<<<< HEAD
 	Hdbscan hdbscan("../HDBSCANDataset/pecan-2000_cleaned.csv");
 	hdbscan.loadCsv(20, true);
 	vector<vector <double>> dataset = hdbscan.dataset;
 	hdbscan.execute(20, 20, "Euclidean");
+=======
+	Hdbscan hdbscan("../HDBSCANDataset/Data_test_3.csv");
+	hdbscan.loadCsv(2);
+	vector<vector <double>> dataset = hdbscan.dataset;
+	hdbscan.execute(5, 5, "Euclidean");
+>>>>>>> 399c3973b6eaf2b74d3efd9c932944db7afa9de1
 	hdbscan.displayResult();
 	return 0;
 
