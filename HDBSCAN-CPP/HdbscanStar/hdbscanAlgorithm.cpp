@@ -13,12 +13,13 @@
 #include"hdbscanAlgorithm.hpp"
 
 
-std::vector<double> hdbscanStar::hdbscanAlgorithm::calculateCoreDistances(std::vector<std::vector<double>> distances, int k)
+std::vector<double> hdbscanStar::hdbscanAlgorithm::calculateCoreDistances(
+	std::vector<std::vector<double>> distances, int k)
 {
-	int length = distances.size();
+	const int length = distances.size();
 
 	int numNeighbors = k - 1;
-	std::vector<double>coreDistances(length);
+	std::vector<double> coreDistances(length);
 	if (k == 1)
 	{
 		for (int point = 0; point < length; point++)
@@ -29,7 +30,7 @@ std::vector<double> hdbscanStar::hdbscanAlgorithm::calculateCoreDistances(std::v
 	}
 	for (int point = 0; point < length; point++)
 	{
-		std::vector<double> kNNDistances(numNeighbors);  //Sorted nearest distances found so far
+		std::vector<double> kNNDistances(numNeighbors); //Sorted nearest distances found so far
 		for (int i = 0; i < numNeighbors; i++)
 		{
 			kNNDistances[i] = std::numeric_limits<double>::max();
@@ -55,13 +56,14 @@ std::vector<double> hdbscanStar::hdbscanAlgorithm::calculateCoreDistances(std::v
 				}
 				kNNDistances[neighborIndex] = distance;
 			}
-
 		}
 		coreDistances[point] = kNNDistances[numNeighbors - 1];
 	}
 	return coreDistances;
 }
-undirectedGraph hdbscanStar::hdbscanAlgorithm::constructMst(std::vector<std::vector<double>> distances, std::vector<double> coreDistances, bool selfEdges)
+
+undirectedGraph hdbscanStar::hdbscanAlgorithm::constructMst(std::vector<std::vector<double>> distances,
+                                                            std::vector<double> coreDistances, bool selfEdges)
 {
 	int length = distances.size();
 	int selfEdgeCapacity = 0;
@@ -83,7 +85,6 @@ undirectedGraph hdbscanStar::hdbscanAlgorithm::constructMst(std::vector<std::vec
 
 	while (numAttachedPoints < length)
 	{
-
 		int nearestMRDPoint = -1;
 		double nearestMRDDistance = std::numeric_limits<double>::max();
 		for (int neighbor = 0; neighbor < length; neighbor++)
@@ -93,16 +94,16 @@ undirectedGraph hdbscanStar::hdbscanAlgorithm::constructMst(std::vector<std::vec
 			if (attachedPoints.get(neighbor) == true)
 				continue;
 			double distance = distances[currentPoint][neighbor];
-			double mutualReachabiltiyDistance = distance;
-			if (coreDistances[currentPoint] > mutualReachabiltiyDistance)
-				mutualReachabiltiyDistance = coreDistances[currentPoint];
+			double mutualReachabilityDistance = distance;
+			if (coreDistances[currentPoint] > mutualReachabilityDistance)
+				mutualReachabilityDistance = coreDistances[currentPoint];
 
-			if (coreDistances[neighbor] > mutualReachabiltiyDistance)
-				mutualReachabiltiyDistance = coreDistances[neighbor];
+			if (coreDistances[neighbor] > mutualReachabilityDistance)
+				mutualReachabilityDistance = coreDistances[neighbor];
 
-			if (mutualReachabiltiyDistance < nearestMRDDistances[neighbor])
+			if (mutualReachabilityDistance < nearestMRDDistances[neighbor])
 			{
-				nearestMRDDistances[neighbor] = mutualReachabiltiyDistance;
+				nearestMRDDistances[neighbor] = mutualReachabilityDistance;
 				nearestMRDNeighbors[neighbor] = currentPoint;
 			}
 
@@ -111,7 +112,6 @@ undirectedGraph hdbscanStar::hdbscanAlgorithm::constructMst(std::vector<std::vec
 				nearestMRDDistance = nearestMRDDistances[neighbor];
 				nearestMRDPoint = neighbor;
 			}
-
 		}
 		attachedPoints.set(nearestMRDPoint);
 		numAttachedPoints++;
@@ -134,10 +134,14 @@ undirectedGraph hdbscanStar::hdbscanAlgorithm::constructMst(std::vector<std::vec
 	}
 	undirectedGraph undirectedGraphObject(length, nearestMRDNeighbors, otherVertexIndices, nearestMRDDistances);
 	return undirectedGraphObject;
-
 }
 
-void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGraph* mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>>& hierarchy, std::vector<double>& pointNoiseLevels, std::vector<int>& pointLastClusters, std::vector<cluster*>& clusters)
+void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGraph* mst, int minClusterSize,
+                                                                   std::vector<hdbscanConstraint> constraints,
+                                                                   std::vector<std::vector<int>>& hierarchy,
+                                                                   std::vector<double>& pointNoiseLevels,
+                                                                   std::vector<int>& pointLastClusters,
+                                                                   std::vector<cluster*>& clusters)
 {
 	int hierarchyPosition = 0;
 
@@ -178,11 +182,13 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 			int firstVertex = mst->getFirstVertexAtIndex(currentEdgeIndex);
 			int secondVertex = mst->getSecondVertexAtIndex(currentEdgeIndex);
 			std::vector<int>& firstVertexEdgeList = mst->getEdgeListForVertex(firstVertex);
-			std::vector<int>::iterator secondVertexInFirstEdgeList = std::find(firstVertexEdgeList.begin(), firstVertexEdgeList.end(), secondVertex);
+			std::vector<int>::iterator secondVertexInFirstEdgeList = std::find(
+				firstVertexEdgeList.begin(), firstVertexEdgeList.end(), secondVertex);
 			if (secondVertexInFirstEdgeList != mst->getEdgeListForVertex(firstVertex).end())
 				mst->getEdgeListForVertex(firstVertex).erase(secondVertexInFirstEdgeList);
 			std::vector<int>& secondVertexEdgeList = mst->getEdgeListForVertex(secondVertex);
-			std::vector<int>::iterator firstVertexInSecondEdgeList = std::find(secondVertexEdgeList.begin(), secondVertexEdgeList.end(), firstVertex);
+			std::vector<int>::iterator firstVertexInSecondEdgeList = std::find(
+				secondVertexEdgeList.begin(), secondVertexEdgeList.end(), firstVertex);
 			if (firstVertexInSecondEdgeList != mst->getEdgeListForVertex(secondVertex).end())
 				mst->getEdgeListForVertex(secondVertex).erase(firstVertexInSecondEdgeList);
 
@@ -211,9 +217,9 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 				{
 					examinedVertices.insert(vertex);
 					affectedIt = affectedVertices.erase(affectedIt);
-
 				}
-				else {
+				else
+				{
 					++affectedIt;
 				}
 			}
@@ -222,9 +228,7 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 			int numChildClusters = 0;
 			while (examinedVertices.size())
 			{
-
 				std::set<int> constructingSubCluster;
-				int iters = 0;
 				std::list<int> unexploredSubClusterPoints;
 				bool anyEdges = false;
 				bool incrementedChildCount = false;
@@ -237,19 +241,23 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 					int vertexToExplore = *unexploredSubClusterPoints.begin();
 					unexploredSubClusterPoints.erase(unexploredSubClusterPoints.begin());
 					std::vector<int>& vertexToExploreEdgeList = mst->getEdgeListForVertex(vertexToExplore);
-					for (std::vector<int>::iterator it = vertexToExploreEdgeList.begin(); it != vertexToExploreEdgeList.end();)
+					for (std::vector<int>::iterator it = vertexToExploreEdgeList.begin(); it != vertexToExploreEdgeList.
+					     end();)
 					{
 						int neighbor = *it;
 						anyEdges = true;
-						if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), neighbor) == constructingSubCluster.end())
+						if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), neighbor) ==
+							constructingSubCluster.end())
 						{
 							constructingSubCluster.insert(neighbor);
 							unexploredSubClusterPoints.push_back(neighbor);
-							if (std::find(examinedVertices.begin(), examinedVertices.end(), neighbor) != examinedVertices.end())
-								examinedVertices.erase(std::find(examinedVertices.begin(), examinedVertices.end(), neighbor));
-
+							if (std::find(examinedVertices.begin(), examinedVertices.end(), neighbor) !=
+								examinedVertices.end())
+								examinedVertices.erase(
+									std::find(examinedVertices.begin(), examinedVertices.end(), neighbor));
 						}
-						else {
+						else
+						{
 							++it;
 						}
 					}
@@ -266,20 +274,21 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 							break;
 						}
 					}
-
 				}
 				//If there could be a split, and this child cluster is valid:
 				if (numChildClusters >= 2 && constructingSubCluster.size() >= minClusterSize && anyEdges)
 				{
 					//Check this child cluster is not equal to the unexplored first child cluster:
 					int firstChildClusterMember = *prev(firstChildCluster.end());
-					if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), firstChildClusterMember) != constructingSubCluster.end())
+					if (std::find(constructingSubCluster.begin(), constructingSubCluster.end(), firstChildClusterMember)
+						!= constructingSubCluster.end())
 						numChildClusters--;
-					//Otherwise, c a new cluster:
+						//Otherwise, c a new cluster:
 					else
 					{
 						cluster* newCluster = createNewCluster(constructingSubCluster, currentClusterLabels,
-							clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
+						                                       clusters[examinedClusterLabel], nextClusterLabel,
+						                                       currentEdgeWeight);
 						newClusters.push_back(newCluster);
 						clusters.push_back(newCluster);
 						nextClusterLabel++;
@@ -288,9 +297,10 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 				else if (constructingSubCluster.size() < minClusterSize || !anyEdges)
 				{
 					createNewCluster(constructingSubCluster, currentClusterLabels,
-						clusters[examinedClusterLabel], 0, currentEdgeWeight);
+					                 clusters[examinedClusterLabel], 0, currentEdgeWeight);
 
-					for (std::set<int>::iterator it = constructingSubCluster.begin(); it != constructingSubCluster.end(); it++)
+					for (std::set<int>::iterator it = constructingSubCluster.begin(); it != constructingSubCluster.end()
+					     ; it++)
 					{
 						int point = *it;
 						pointNoiseLevels[point] = currentEdgeWeight;
@@ -304,10 +314,16 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 				{
 					int vertexToExplore = *unexploredFirstChildClusterPoints.begin();
 					unexploredFirstChildClusterPoints.pop_front();
-					for (std::vector<int>::iterator it = mst->getEdgeListForVertex(vertexToExplore).begin(); it != mst->getEdgeListForVertex(vertexToExplore).end(); it++)
+					for (std::vector<int>::iterator it = mst->getEdgeListForVertex(vertexToExplore).begin(); it != mst
+					                                                                                               ->
+					                                                                                               getEdgeListForVertex(
+						                                                                                               vertexToExplore)
+					                                                                                               .end()
+					     ; it++)
 					{
 						int neighbor = *it;
-						if (std::find(firstChildCluster.begin(), firstChildCluster.end(), neighbor) == firstChildCluster.end())
+						if (std::find(firstChildCluster.begin(), firstChildCluster.end(), neighbor) == firstChildCluster
+							.end())
 						{
 							firstChildCluster.insert(neighbor);
 							unexploredFirstChildClusterPoints.push_back(neighbor);
@@ -315,7 +331,8 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 					}
 				}
 				cluster* newCluster = createNewCluster(firstChildCluster, currentClusterLabels,
-					clusters[examinedClusterLabel], nextClusterLabel, currentEdgeWeight);
+				                                       clusters[examinedClusterLabel], nextClusterLabel,
+				                                       currentEdgeWeight);
 				newClusters.push_back(newCluster);
 				clusters.push_back(newCluster);
 				nextClusterLabel++;
@@ -356,7 +373,10 @@ void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGra
 		hierarchy.push_back(lineContents);
 	}
 }
-std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vector<cluster*>& clusters, std::vector<std::vector<int>>& hierarchy, int numPoints)
+
+std::vector<int> hdbscanStar::hdbscanAlgorithm::findProminentClusters(std::vector<cluster*>& clusters,
+                                                                      std::vector<std::vector<int>>& hierarchy,
+                                                                      int numPoints)
 {
 	//Take the list of propagated clusters from the root cluster:
 	std::vector<cluster*> solution = clusters[1]->PropagatedDescendants;
@@ -409,7 +429,7 @@ bool hdbscanStar::hdbscanAlgorithm::propagateTree(std::vector<cluster*>& cluster
 		{
 			int label = cluster->Label;
 			clustersToExamine.erase(label);
-			clustersToExamine.insert({ label, cluster });
+			clustersToExamine.insert({label, cluster});
 			addedToExaminationList.set(label);
 		}
 	}
@@ -432,7 +452,7 @@ bool hdbscanStar::hdbscanAlgorithm::propagateTree(std::vector<cluster*>& cluster
 			if (!addedToExaminationList.get(label))
 			{
 				clustersToExamine.erase(label);
-				clustersToExamine.insert({ label, parent });
+				clustersToExamine.insert({label, parent});
 				addedToExaminationList.set(label);
 			}
 		}
@@ -510,6 +530,7 @@ cluster* hdbscanStar::hdbscanAlgorithm::createNewCluster(
 	parentCluster->addPointsToVirtualChildCluster(points);
 	return NULL;
 }
+
 /// <summary>
 /// Calculates the number of constraints satisfied by the new clusters and virtual children of the
 /// parents of the new clusters.
@@ -524,12 +545,11 @@ void hdbscanStar::hdbscanAlgorithm::calculateNumConstraintsSatisfied(
 	std::vector<hdbscanConstraint>& constraints,
 	std::vector<int>& clusterLabels)
 {
-
 	if (constraints.size() == 0)
 		return;
 
 	std::vector<cluster> parents;
-	std::vector<cluster> ::iterator it;
+	std::vector<cluster>::iterator it;
 	for (int label : newClusterLabels)
 	{
 		cluster* parent = clusters[label]->Parent;
@@ -547,11 +567,13 @@ void hdbscanStar::hdbscanAlgorithm::calculateNumConstraintsSatisfied(
 			if (find(newClusterLabels.begin(), newClusterLabels.end(), labelA) != newClusterLabels.end())
 				clusters[labelA]->addConstraintsSatisfied(2);
 		}
-		else if (constraint.getConstraintType() == hdbscanConstraintType::cannotLink && (labelA != labelB || labelA == 0))
+		else if (constraint.getConstraintType() == hdbscanConstraintType::cannotLink && (labelA != labelB || labelA == 0
+		))
 		{
 			if (labelA != 0 && find(newClusterLabels.begin(), newClusterLabels.end(), labelA) != newClusterLabels.end())
 				clusters[labelA]->addConstraintsSatisfied(1);
-			if (labelB != 0 && (find(newClusterLabels.begin(), newClusterLabels.end(), labelA) != newClusterLabels.end()))
+			if (labelB != 0 && (find(newClusterLabels.begin(), newClusterLabels.end(), labelA) != newClusterLabels.end()
+			))
 				clusters[labelB]->addConstraintsSatisfied(1);
 			if (labelA == 0)
 			{

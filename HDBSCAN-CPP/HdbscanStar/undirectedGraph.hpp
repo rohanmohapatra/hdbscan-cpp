@@ -1,5 +1,6 @@
 #pragma once
 #include<vector>
+
 class undirectedGraph
 {
 private:
@@ -10,7 +11,8 @@ private:
 	std::vector<std::vector<int>> _edges;
 
 public:
-	undirectedGraph(int numVertices, std::vector<int> verticesA, std::vector<int> verticesB, std::vector<double> edgeWeights)
+	undirectedGraph(int numVertices, std::vector<int> verticesA, std::vector<int> verticesB,
+	                std::vector<double> edgeWeights)
 	{
 		_numVertices = numVertices;
 		_verticesA = verticesA;
@@ -26,7 +28,6 @@ public:
 			if (_verticesA[i] != _verticesB[i])
 				_edges[_verticesB[i]].push_back(_verticesA[i]);
 		}
-
 	}
 
 	void quicksortByEdgeWeight();
@@ -38,12 +39,10 @@ public:
 	int getSecondVertexAtIndex(int index);
 
 	double getEdgeWeightAtIndex(int index);
-	std::vector<int> &getEdgeListForVertex(int vertex);
+	std::vector<int>& getEdgeListForVertex(int vertex);
 private:
 	int selectPivotIndex(int startIndex, int endIndex);
 
 	int partition(int startIndex, int endIndex, int pivotIndex);
 	void swapEdges(int indexOne, int indexTwo);
-
 };
-

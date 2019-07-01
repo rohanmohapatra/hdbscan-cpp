@@ -1,13 +1,14 @@
 #include"cluster.hpp"
 #include <iostream>
 int cluster::counter = 0;
+
 cluster::cluster()
 {
-
 	_id = ++counter;
 }
 
-cluster::cluster(int label, cluster* parent, double birthLevel, int numPoints) //:Label(label), Parent(parent), _birthLevel(birthLevel), _numPoints(numPoints)
+cluster::cluster(int label, cluster* parent, double birthLevel, int numPoints)
+//:Label(label), Parent(parent), _birthLevel(birthLevel), _numPoints(numPoints)
 {
 	_id = ++counter;
 	_deathLevel = 0;
@@ -29,9 +30,12 @@ cluster::cluster(int label, cluster* parent, double birthLevel, int numPoints) /
 	HasChildren = false;
 	PropagatedDescendants.resize(0);
 }
-bool cluster ::operator==(const cluster& other) const {
+
+bool cluster::operator==(const cluster& other) const
+{
 	return (this->_id == other._id);
 }
+
 void cluster::detachPoints(int numPoints, double level)
 {
 	_numPoints -= numPoints;
@@ -67,7 +71,8 @@ void cluster::propagate()
 		{
 			Parent->_propagatedNumConstraintsSatisfied += _propagatedNumConstraintsSatisfied;
 			Parent->_propagatedStability += _propagatedStability;
-			Parent->PropagatedDescendants.insert(Parent->PropagatedDescendants.end(), PropagatedDescendants.begin(), PropagatedDescendants.end());
+			Parent->PropagatedDescendants.insert(Parent->PropagatedDescendants.end(), PropagatedDescendants.begin(),
+			                                     PropagatedDescendants.end());
 		}
 		else if (_numConstraintsSatisfied == _propagatedNumConstraintsSatisfied)
 		{
@@ -82,17 +87,21 @@ void cluster::propagate()
 			{
 				Parent->_propagatedNumConstraintsSatisfied += _propagatedNumConstraintsSatisfied;
 				Parent->_propagatedStability += _propagatedStability;
-				Parent->PropagatedDescendants.insert(Parent->PropagatedDescendants.end(), PropagatedDescendants.begin(), PropagatedDescendants.end());
+				Parent->PropagatedDescendants.insert(Parent->PropagatedDescendants.end(), PropagatedDescendants.begin(),
+				                                     PropagatedDescendants.end());
 			}
 		}
 	}
 }
+
 void cluster::addPointsToVirtualChildCluster(std::set<int> points)
 {
-	for (std::set<int>::iterator it = points.begin(); it != points.end(); ++it) {
+	for (std::set<int>::iterator it = points.begin(); it != points.end(); ++it)
+	{
 		_virtualChildCluster.insert(*it);
 	}
 }
+
 bool cluster::virtualChildClusterConstraintsPoint(int point)
 {
 	return (_virtualChildCluster.find(point) != _virtualChildCluster.end());
@@ -113,8 +122,7 @@ void cluster::releaseVirtualChildCluster()
 	_virtualChildCluster.clear();
 }
 
-int cluster::getClusterId() {
+int cluster::getClusterId() const
+{
 	return this->_id;
 }
-
-

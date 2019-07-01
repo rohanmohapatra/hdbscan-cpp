@@ -1,17 +1,20 @@
 #include "outlierScore.hpp"
-#include <tuple> 
+#include <tuple>
 
-outlierScore::outlierScore() {
+outlierScore::outlierScore()
+{
 	;
 }
 
-outlierScore::outlierScore(double score, double coreDistance, int id) {
+outlierScore::outlierScore(double score, double coreDistance, int id)
+{
 	outlierScore::score = score;
 	outlierScore::coreDistance = coreDistance;
 	outlierScore::id = id;
 }
 
-bool outlierScore::operator<(const outlierScore& other) const {
+bool outlierScore::operator<(const outlierScore& other) const
+{
 	/*
 	if (score < other.score)
 		return score < other.score;

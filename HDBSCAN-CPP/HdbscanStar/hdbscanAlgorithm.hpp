@@ -22,10 +22,11 @@ namespace hdbscanStar
 		/// <param name="k">Each point's core distance will be it's distance to the kth nearest neighbor</param>
 		/// <returns> An array of core distances</returns>
 		static std::vector<double> calculateCoreDistances(std::vector<std::vector<double>> distances, int k);
-		
-		static undirectedGraph constructMst(std::vector<std::vector<double>> distances, std::vector<double> coreDistances, bool selfEdges);
-		
-	
+
+		static undirectedGraph constructMst(std::vector<std::vector<double>> distances,
+		                                    std::vector<double> coreDistances, bool selfEdges);
+
+
 		/// <summary>
 		/// Propagates constraint satisfaction, stability, and lowest child death level from each child
 		/// cluster to each parent cluster in the tree.  This method must be called before calling
@@ -35,12 +36,18 @@ namespace hdbscanStar
 		/// <returns>true if there are any clusters with infinite stability, false otherwise</returns>
 
 
-		static void computeHierarchyAndClusterTree(undirectedGraph *mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> &hierarchy, std::vector<double> &pointNoiseLevels, std::vector<int> &pointLastClusters, std::vector<cluster*> &clusters);
-		
-		static std::vector<int> findProminentClusters(std::vector<cluster*> &clusters, std::vector<std::vector<int>> &hierarchy, int numPoints);
+		static void computeHierarchyAndClusterTree(undirectedGraph* mst, int minClusterSize,
+		                                           std::vector<hdbscanConstraint> constraints,
+		                                           std::vector<std::vector<int>>& hierarchy,
+		                                           std::vector<double>& pointNoiseLevels,
+		                                           std::vector<int>& pointLastClusters,
+		                                           std::vector<cluster*>& clusters);
 
-		static bool propagateTree(std::vector<cluster*> &sclusters);
-		
+		static std::vector<int> findProminentClusters(std::vector<cluster*>& clusters,
+		                                              std::vector<std::vector<int>>& hierarchy, int numPoints);
+
+		static bool propagateTree(std::vector<cluster*>& clusters);
+
 		/// <summary>
 		/// Produces the outlier score for each point in the data set, and returns a sorted list of outlier
 		/// scores.  propagateTree() must be called before calling this method.
@@ -51,11 +58,11 @@ namespace hdbscanStar
 		/// <param name="coreDistances">An array of core distances for each data point</param>
 		/// <returns>An List of OutlierScores, sorted in descending order</returns>
 		static std::vector<outlierScore> calculateOutlierScores(
-			std::vector<cluster*> &clusters,
-			std::vector<double> &pointNoiseLevels,
-			std::vector<int> &pointLastClusters,
+			std::vector<cluster*>& clusters,
+			std::vector<double>& pointNoiseLevels,
+			std::vector<int>& pointLastClusters,
 			std::vector<double> coreDistances);
-		
+
 		/// <summary>
 		/// Removes the set of points from their parent Cluster, and creates a new Cluster, provided the
 		/// clusterId is not 0 (noise).
@@ -68,11 +75,11 @@ namespace hdbscanStar
 		/// <returns>The new Cluster, or null if the clusterId was 0</returns>
 		static cluster* createNewCluster(
 			std::set<int>& points,
-			std::vector<int> &clusterLabels,
-			cluster *parentCluster,
+			std::vector<int>& clusterLabels,
+			cluster* parentCluster,
 			int clusterLabel,
 			double edgeWeight);
-		
+
 		/// <summary>
 		/// Calculates the number of constraints satisfied by the new clusters and virtual children of the
 		/// parents of the new clusters.
@@ -86,9 +93,5 @@ namespace hdbscanStar
 			std::vector<cluster*>& clusters,
 			std::vector<hdbscanConstraint>& constraints,
 			std::vector<int>& clusterLabels);
-		
 	};
-
 }
-
-

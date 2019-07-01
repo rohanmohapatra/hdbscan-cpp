@@ -44,6 +44,6 @@ public:
 
 	void releaseVirtualChildCluster();
 
-	int getClusterId();
+	int getClusterId() const;
 
 };

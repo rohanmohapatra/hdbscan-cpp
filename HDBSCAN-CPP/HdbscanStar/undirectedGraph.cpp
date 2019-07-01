@@ -32,9 +32,9 @@ void undirectedGraph::quicksortByEdgeWeight()
 			endIndexStack[stackTop + 1] = endIndex;
 			stackTop++;
 		}
-
 	}
 }
+
 int undirectedGraph::selectPivotIndex(int startIndex, int endIndex)
 {
 	if (startIndex - endIndex <= 1)

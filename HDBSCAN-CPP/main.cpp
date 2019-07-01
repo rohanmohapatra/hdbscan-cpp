@@ -9,8 +9,8 @@ using namespace std;
 #include <list>
 
 
-int main() {
-
+int main()
+{
 	/*cout << "Hello World!" << endl;
 	vector< vector<double>> x;
 	cout << typeid(x).name() <<endl;
@@ -50,9 +50,8 @@ int main() {
 	*/
 	Hdbscan hdbscan("../HDBSCANDataset/pecan-2000_cleaned.csv");
 	hdbscan.loadCsv(20, true);
-	vector<vector <double>> dataset = hdbscan.dataset;
+	vector<vector<double>> dataset = hdbscan.dataset;
 	hdbscan.execute(20, 20, "Euclidean");
 	hdbscan.displayResult();
 	return 0;
-
 }
