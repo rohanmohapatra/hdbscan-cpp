@@ -10,7 +10,7 @@ string Hdbscan::getFileName() {
 	return this->fileName;
 }
 /// <summary>
-///	Loads the csv file as specified by the constructor.
+///	Loads the csv file as specified by the constructor.CSV
 /// </summary>
 /// <param name="numberOfalues">A List of attributes to be choosen</param>
 /// <param name="skipHeader">Bool value to skip header or not</param>
