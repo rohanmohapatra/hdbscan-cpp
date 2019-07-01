@@ -9,6 +9,12 @@ using namespace std;
 string Hdbscan::getFileName() {
 	return this->fileName;
 }
+/// <summary>
+///	Loads the csv file as specified by the constructor.
+/// </summary>
+/// <param name="numberOfalues">A List of attributes to be choosen</param>
+/// <param name="skipHeader">Bool value to skip header or not</param>
+/// <returns>1 if successful, 0 otherwise</returns>
 
 int Hdbscan::loadCsv(int numberOfValues, bool skipHeader) {
 	string  attribute;
@@ -41,7 +47,7 @@ int Hdbscan::loadCsv(int numberOfValues, bool skipHeader) {
 	return 1;
 }
 
-void Hdbscan::execute(int minPoints,int minClusterSize,string distanceMetric) {
+void Hdbscan::execute(int minPoints, int minClusterSize, string distanceMetric) {
 	//Call The Runner Class here
 	hdbscanRunner runner;
 	hdbscanParameters parameters;
@@ -55,7 +61,7 @@ void Hdbscan::execute(int minPoints,int minClusterSize,string distanceMetric) {
 	parameters.minClusterSize = minClusterSize;
 	parameters.distanceFunction = distanceMetric;
 	this->result = runner.run(parameters);
-	
+
 	this->labels_ = result.labels;
 	this->outlierScores_ = result.outliersScores;
 	for (uint32_t i = 0; i < result.labels.size(); i++) {
@@ -78,7 +84,7 @@ void Hdbscan::execute(int minPoints,int minClusterSize,string distanceMetric) {
 		else if (labels_[i] == 0) {
 			normalizedLabels.push_back(-1);
 		}
-			
+
 	}
 	this->normalizedLabels_ = normalizedLabels;
 }
@@ -88,13 +94,13 @@ void Hdbscan::displayResult() {
 	uint32_t numClusters = 0;
 
 	cout << "HDBSCAN clustering for " << this->dataset.size() << " objects." << endl << endl;
-	
+
 	for (uint32_t i = 0; i < result.labels.size(); i++) {
 		cout << result.labels[i] << " ";
 	}
 
 	cout << endl << endl;
 
-	cout << "The Clustering contains " << this->numClusters_ << " clusters with " << this->noisyPoints_ << " noise Points."<<endl;
-	
+	cout << "The Clustering contains " << this->numClusters_ << " clusters with " << this->noisyPoints_ << " noise Points." << endl;
+
 }

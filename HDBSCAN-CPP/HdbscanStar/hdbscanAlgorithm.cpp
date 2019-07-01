@@ -136,13 +136,6 @@ undirectedGraph hdbscanStar::hdbscanAlgorithm::constructMst(std::vector<std::vec
 	return undirectedGraphObject;
 
 }
-/// <summary>
-/// Propagates constraint satisfaction, stability, and lowest child death level from each child
-/// cluster to each parent cluster in the tree.  This method must be called before calling
-/// findProminentClusters() or calculateOutlierScores().
-/// </summary>
-/// <param name="clusters">A list of Clusters forming a cluster tree</param>
-/// <returns>true if there are any clusters with infinite stability, false otherwise</returns>
 
 void hdbscanStar::hdbscanAlgorithm::computeHierarchyAndClusterTree(undirectedGraph* mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>>& hierarchy, std::vector<double>& pointNoiseLevels, std::vector<int>& pointLastClusters, std::vector<cluster*>& clusters)
 {

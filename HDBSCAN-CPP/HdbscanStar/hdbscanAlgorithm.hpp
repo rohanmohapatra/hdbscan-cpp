@@ -34,6 +34,7 @@ namespace hdbscanStar
 		/// <param name="clusters">A list of Clusters forming a cluster tree</param>
 		/// <returns>true if there are any clusters with infinite stability, false otherwise</returns>
 
+
 		static void computeHierarchyAndClusterTree(undirectedGraph *mst, int minClusterSize, std::vector<hdbscanConstraint> constraints, std::vector<std::vector<int>> &hierarchy, std::vector<double> &pointNoiseLevels, std::vector<int> &pointLastClusters, std::vector<cluster*> &clusters);
 		
 		static std::vector<int> findProminentClusters(std::vector<cluster*> &clusters, std::vector<std::vector<int>> &hierarchy, int numPoints);

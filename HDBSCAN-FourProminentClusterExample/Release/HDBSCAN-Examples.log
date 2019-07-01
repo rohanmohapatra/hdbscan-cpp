@@ -1,0 +1,58 @@
+﻿  FourProminentClusterExample.cpp
+bitSet.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+bitSet.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+bitSet.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:ICF' specification
+cluster.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+cluster.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+EuclideanDistance.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+EuclideanDistance.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+example.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+example.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+FourProminentClusterExample.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+FourProminentClusterExample.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+hdbscan.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+hdbscan.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+hdbscanAlgorithm.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+hdbscanAlgorithm.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+hdbscanParameters.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+hdbscanParameters.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+hdbscanResult.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+hdbscanResult.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+hdbscanRunner.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+hdbscanRunner.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+IDistanceCalculator.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+IDistanceCalculator.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+main.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+main.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+ManhattanDistance.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+ManhattanDistance.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+outlierScore.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+outlierScore.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+undirectedGraph.obj : error LNK2038: mismatch detected for '_ITERATOR_DEBUG_LEVEL': value '2' doesn't match value '0' in FourProminentClusterExample.obj
+undirectedGraph.obj : error LNK2038: mismatch detected for 'RuntimeLibrary': value 'MDd_DynamicDebug' doesn't match value 'MD_DynamicRelease' in FourProminentClusterExample.obj
+LINK : warning LNK4098: defaultlib 'MSVCRTD' conflicts with use of other libs; use /NODEFAULTLIB:library
+hdbscanRunner.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+main.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+ManhattanDistance.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+undirectedGraph.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+FourProminentClusterExample.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+hdbscan.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+hdbscanAlgorithm.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+hdbscanResult.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+bitSet.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+cluster.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+EuclideanDistance.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+example.obj : error LNK2001: unresolved external symbol __imp___invalid_parameter
+hdbscanRunner.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+main.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+ManhattanDistance.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+undirectedGraph.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+FourProminentClusterExample.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+hdbscan.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+hdbscanAlgorithm.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+hdbscanResult.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+bitSet.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+cluster.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+EuclideanDistance.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+example.obj : error LNK2001: unresolved external symbol __imp___CrtDbgReport
+C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Release\HDBSCAN-FourProminentClusterExample.exe : fatal error LNK1120: 2 unresolved externals

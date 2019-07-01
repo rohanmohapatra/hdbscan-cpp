@@ -49,38 +49,38 @@ hdbscanResult hdbscanRunner::run(hdbscanParameters parameters) {
 		parameters.distances = distances;
 	}
 
-		std::vector <double> coreDistances = algorithm.calculateCoreDistances(
-			parameters.distances,
-			parameters.minPoints);
+	std::vector <double> coreDistances = algorithm.calculateCoreDistances(
+		parameters.distances,
+		parameters.minPoints);
 
-		undirectedGraph mst = algorithm.constructMst(
-			parameters.distances,
-			coreDistances,
-			true);
-		mst.quicksortByEdgeWeight();
+	undirectedGraph mst = algorithm.constructMst(
+		parameters.distances,
+		coreDistances,
+		true);
+	mst.quicksortByEdgeWeight();
 
-		std::vector<double> pointNoiseLevels(numPoints);
-		std::vector<int> pointLastClusters(numPoints);
+	std::vector<double> pointNoiseLevels(numPoints);
+	std::vector<int> pointLastClusters(numPoints);
 
-		std::vector< std::vector <int> > hierarchy;
+	std::vector< std::vector <int> > hierarchy;
 
-		std::vector<cluster*> clusters;
-		algorithm.computeHierarchyAndClusterTree(
-			&mst,
-			parameters.minClusterSize,
-			parameters.constraints,
-			hierarchy,
-			pointNoiseLevels,
-			pointLastClusters,
-			clusters);
-		bool infiniteStability = algorithm.propagateTree(clusters);
-		
-		std::vector<int> prominentClusters = algorithm.findProminentClusters(clusters, hierarchy, numPoints);
-		std::vector<outlierScore> scores = algorithm.calculateOutlierScores(
-			clusters,
-			pointNoiseLevels,
-			pointLastClusters,
-			coreDistances);
-		
-		return hdbscanResult(prominentClusters, scores, infiniteStability);
+	std::vector<cluster*> clusters;
+	algorithm.computeHierarchyAndClusterTree(
+		&mst,
+		parameters.minClusterSize,
+		parameters.constraints,
+		hierarchy,
+		pointNoiseLevels,
+		pointLastClusters,
+		clusters);
+	bool infiniteStability = algorithm.propagateTree(clusters);
+
+	std::vector<int> prominentClusters = algorithm.findProminentClusters(clusters, hierarchy, numPoints);
+	std::vector<outlierScore> scores = algorithm.calculateOutlierScores(
+		clusters,
+		pointNoiseLevels,
+		pointLastClusters,
+		coreDistances);
+
+	return hdbscanResult(prominentClusters, scores, infiniteStability);
 }

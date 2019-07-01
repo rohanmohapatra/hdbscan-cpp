@@ -1,0 +1,37 @@
+﻿Warning VSP2347: The monitor was unable to install the VS performance driver.  Access is denied. Consider using the /Admin:Driver,Install option of VSPerfCmd from an elevated environment.  Performance counter data and detection of kernel mode execution is disabled.
+Profiling started.
+Instrumenting C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Release\HDBSCAN-CPP.exe in place
+Info VSP3049: Small functions will be excluded from instrumentation.
+Microsoft (R) VSInstr Post-Link Instrumentation 16.1.28929.3 x86
+Analyzing component...
+Instrumenting component...
+#                    (0.22 %%)
+##                   (5.16 %%)
+###                  (10.11 %%)
+####                 (15.05 %%)
+#####                (20.22 %%)
+######               (25.16 %%)
+#######              (30.11 %%)
+########             (35.05 %%)
+#########            (40.22 %%)
+##########           (45.16 %%)
+###########          (50.11 %%)
+############         (55.05 %%)
+#############        (60.22 %%)
+##############       (65.16 %%)
+###############      (70.11 %%)
+################     (75.05 %%)
+#################    (80.21 %%)
+##################   (85.16 %%)
+###################  (90.11 %%)
+#################### (95.05 %%)
+#################### (100.00 %%)
+Successfully instrumented file C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Release\HDBSCAN-CPP.exe.
+Profiling process ID 11840 (HDBSCAN-CPP).
+Process ID 11840 has exited.
+Data written to C:\Users\rmohapat\AppData\Local\Temp\Report20190627-1456.vsp.
+Profiling finished.
+Loaded symbols for C:\Users\rmohapat\source\repos\HDBSCAN-CPP\HDBSCAN-CPP\Release\HDBSCAN-CPP.exe.
+Failed to load symbols for C:\WINDOWS\SYSTEM32\MSVCP140.dll.
+Failed to load symbols for C:\WINDOWS\System32\ucrtbase.dll.
+Profiling complete.
