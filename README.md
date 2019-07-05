@@ -1,11 +1,10 @@
 # HDBSCAN-CPP
 Fast and Efficient Implementation of HDBSCAN in C++ using STL.
-
+--------------------------------------------------------------------------------------------------------------
 
 Authored by:
-Sumedh Basarkod
-Rohan Mohapatra
---------------------------------------------------------------------------------------------------------------
+* [Sumedh Basarkod](https://github.com/sumedhpb)
+* [Rohan Mohapatra](https://github.com/rohanmohapatra)
 
 The Standard Template Library (STL) is a set of C++ template classes to provide common programming 
 data structures and functions such as lists, stacks, arrays, etc. It is a library of container classes, algorithms, and iterators. 
@@ -82,3 +81,7 @@ the authors will attempt to respond.
 We welcome contributions in any form! Assistance with documentation, is always welcome. 
 To contribute please fork the project make your changes and submit a pull request. 
 We will do our best to work through any issues with you and get your code merged into the master branch.
+
+### Contact us if you have any questions
+* Rohan Mohapatra : rohannmohapatra@gmail.com
+* Sumedh Basarkod : sumedhpb8@gmail.com
