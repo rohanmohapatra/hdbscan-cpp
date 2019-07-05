@@ -48,8 +48,8 @@ int main()
 	a[0] = e;
 	cout << &a[0] << " " << &e << endl;
 	*/
-	Hdbscan hdbscan("../HDBSCANDataset/pecan-2000_cleaned.csv");
-	hdbscan.loadCsv(20, true);
+	Hdbscan hdbscan("../HDBSCANDataset/pecan2000.csv");
+	hdbscan.loadCsv(4, true);
 	vector<vector<double>> dataset = hdbscan.dataset;
 	hdbscan.execute(20, 20, "Euclidean");
 	hdbscan.displayResult();

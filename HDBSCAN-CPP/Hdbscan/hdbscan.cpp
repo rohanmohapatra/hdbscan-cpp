@@ -67,8 +67,8 @@ void Hdbscan::execute(int minPoints, int minClusterSize, string distanceMetric)
 	parameters.minPoints = minPoints;
 	parameters.minClusterSize = minClusterSize;
 	parameters.distanceFunction = distanceMetric;
-	this->result = runner.run(parameters);
 
+	this->result = runner.run(parameters);
 	this->labels_ = result.labels;
 	this->outlierScores_ = result.outliersScores;
 	for (uint32_t i = 0; i < result.labels.size(); i++)
