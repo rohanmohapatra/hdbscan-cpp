@@ -1,5 +1,5 @@
 #pragma once
-#include"..//distance/IDistanceCalculator.hpp"
+#include"../Distance/IDistanceCalculator.hpp"
 #include<iostream>
 #include<vector>
 #include"../HdbscanStar/hdbscanConstraint.hpp"
