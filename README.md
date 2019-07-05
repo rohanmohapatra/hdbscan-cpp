@@ -1,5 +1,7 @@
 # HDBSCAN-CPP
 Fast and Efficient Implementation of HDBSCAN in C++ using STL.
+
+
 Authored by:
 Sumedh Basarkod
 Rohan Mohapatra
