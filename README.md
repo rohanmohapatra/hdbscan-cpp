@@ -90,3 +90,6 @@ We will do our best to work through any issues with you and get your code merged
 ### Contact us if you have any questions
 * Rohan Mohapatra : rohannmohapatra@gmail.com
 * Sumedh Basarkod : sumedhpb8@gmail.com
+
+## Copyright and license
+Code released under the MIT license.
