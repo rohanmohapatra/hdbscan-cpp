@@ -161,9 +161,6 @@
   <ItemGroup>
     <None Include=".gitattributes" />
     <None Include=".gitignore" />
-    <None Include="FETCH_HEAD" />
-    <None Include="HDBSCAN-CPP.vcxproj.filters.orig" />
-    <None Include="HDBSCAN-CPP.vcxproj.orig" />
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

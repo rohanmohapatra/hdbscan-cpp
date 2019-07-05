@@ -7,7 +7,7 @@
 #include<map>
 using namespace std;
 
-string Hdbscan::getFileName() const
+string Hdbscan::getFileName()
 {
 	return this->fileName;
 }
@@ -99,6 +99,11 @@ void Hdbscan::displayResult() {
 
 	for (uint32_t i = 0; i < result.labels.size(); i++) {
 		cout << result.labels[i] << " ";
+	}
+
+	cout << endl << endl;
+	for (uint32_t i = 0; i <this->membershipProbabilities_.size(); i++) {
+		cout << this->membershipProbabilities_[i] << " ";
 	}
 
 	cout << endl << endl;
