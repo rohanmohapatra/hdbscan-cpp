@@ -1,4 +1,9 @@
 # HDBSCAN-CPP
+[![HDBSCAN](https://img.shields.io/badge/HDBSCAN-Clustering-yellowgreen.svg)](https://hdbscan.readthedocs.io/en/latest/how_hdbscan_works.html)
+[![C++](https://img.shields.io/badge/C%2B%2B-14-green.svg )](https://en.wikipedia.org/wiki/C%2B%2B14)
+[![STL](https://img.shields.io/badge/C%2B%2B-STL-brightgreen.svg )](https://en.wikipedia.org/wiki/Standard_Template_Library)
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg )](https://en.wikipedia.org/wiki/MIT_License)
+
 Fast and Efficient Implementation of HDBSCAN in C++ using STL.
 --------------------------------------------------------------------------------------------------------------
 
