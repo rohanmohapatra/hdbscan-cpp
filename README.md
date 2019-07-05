@@ -24,6 +24,8 @@ HDBSCAN is ideal for exploratory data analysis; it's a fast and robust algorithm
 Based on the paper:
 > R. Campello, D. Moulavi, and J. Sander, Density-Based Clustering Based on Hierarchical Density Estimates In: Advances in Knowledge Discovery and Data Mining, Springer, pp 160-172. 2013
 
+Design of the Clustering algorithm is referenced from [this](https://github.com/doxakis/HdbscanSharp).
+
 ### How to Run this code?
 
 Clone this project as this contains the library.
@@ -81,6 +83,7 @@ int main() {
 ### Help and Support
 If you have issues, please check the issues on github. Finally, if no solution is available there feel free to open an issue ; 
 the authors will attempt to respond.
+
 
 ### Contributing
 We welcome contributions in any form! Assistance with documentation, is always welcome. 
