@@ -4,15 +4,22 @@ language: cpp
 # Compiler selection
 compiler:
   - g++ 
+  - gcc
+  
+before_install:
+  - pip install --user cpp-coveralls
+  
 sudo: required
 script:
   - sudo unlink /usr/bin/g++ && sudo ln -s /usr/bin/g++-5 /usr/bin/g++
   - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
   - gcc --version
   - make all clean  
-  - sbt clean coverage test
+  - ./configure --enable-gcov && make && make check
   
-after_success: "sbt coveralls"
+after_success:
+  - coveralls --exclude lib --exclude tests --gcov-options '\-lp'
+  
 
 addons:
   apt:
