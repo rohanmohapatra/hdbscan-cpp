@@ -4,6 +4,7 @@
 #include<sstream>
 #include<set>
 #include<map>
+#include<cstdint>
 using namespace std;
 
 string Hdbscan::getFileName() {
