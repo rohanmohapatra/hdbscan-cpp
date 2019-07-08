@@ -10,6 +10,9 @@ script:
   - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
   - gcc --version
   - make all clean  
+  - sbt clean coverage test
+  
+after_success: "sbt coveralls"
 
 addons:
   apt:
