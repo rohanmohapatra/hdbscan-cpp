@@ -23,7 +23,7 @@ int Hdbscan::loadCsv(int numberOfValues, bool skipHeader) {
 	string line = "";
 
 	int currentAttributes;
-	vector<vector<double>> dataset;
+	vector<vector<double> > dataset;
 
 	string fileName = this->getFileName();
 	ifstream file(fileName, ios::in);
