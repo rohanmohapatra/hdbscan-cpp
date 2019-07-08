@@ -4,6 +4,7 @@
 [![STL](https://img.shields.io/badge/C%2B%2B-STL-brightgreen.svg )](https://en.wikipedia.org/wiki/Standard_Template_Library)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg )](https://en.wikipedia.org/wiki/MIT_License)
 [![Build Status](https://travis-ci.org/rohanmohapatra/hdbscan-cpp.svg?branch=master)](https://travis-ci.org/rohanmohapatra/hdbscan-cpp)
+[![Coverage Status](https://coveralls.io/repos/github/rohanmohapatra/hdbscan-cpp/badge.svg?branch=master)](https://coveralls.io/github/rohanmohapatra/hdbscan-cpp?branch=master)
 
 Fast and Efficient Implementation of HDBSCAN in C++ using STL.
 --------------------------------------------------------------------------------------------------------------
