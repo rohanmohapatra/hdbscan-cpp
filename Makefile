@@ -7,7 +7,7 @@ TARGET=main
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(LINK.cpp) $^ $(LOADLIBES) $(LDLIBS) -o -std=c++11 $@
+	$(LINK.cpp) $^ -std=c++11 $(LOADLIBES) $(LDLIBS) -o $@
 
 .PHONY: clean
 clean:
