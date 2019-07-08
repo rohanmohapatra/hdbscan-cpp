@@ -1,5 +1,5 @@
-
 SOURCES=$(shell find . -name "*.cpp")
+CXXFLAGS= -std=c++11 -Wall
 OBJECTS=$(SOURCES:%.cpp=%.o)
 TARGET=main
 
